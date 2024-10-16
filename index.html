@@ -1,11 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Que Pelicula Vemos Hoy</title>
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee&family=Gloria+Hallelujah&family=Londrina+Sketch&family=Outfit:wght@100..900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    
+    <header>
+        <h2><img src="/multimedia/tira-de-pelicula.png" width="25px"> What To Watch</h2>
+        <nav>
+            <ul>
+                <li><a href="#">Recomendador</a></li>
+                <li><a href="#">Mi lista</a></li>
+                <li><a href="#">Juego Eliminacion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="my-favs">
+            <h1>Mi Lista:</h1>
+            <div id="fav-grid">
+                <div class="fav-movie">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="portada"
+                        class="fav-movie">
+                </div>
+                <div class="fav-movie">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="portada"
+                        class="fav-movie">
+                    <div class="filter-back">
+                        <h5>El Pingüino</h5>
+                        <h6>Crimen, Drama (2024)</h6>
+                        <button>Sinopsis</button>
+                        <button>Trailer</button>
+                        <button>Ver en ...</button>
+                        <button>Borrar de mi lista</button>
+                    </div>
+                </div>
+
+                <img src="https://www.themoviedb.org/t/p/w1280/kkFn3KM47Qq4Wjhd8GuFfe3LX27.jpg" alt="portada"
+                    class="fav-movie">
+                <img src="https://www.themoviedb.org/t/p/w1280/v0eQLbzT6sWelfApuYsEkYpzufl.jpg" alt="portada"
+                    class="fav-movie">
+                <img src="https://www.themoviedb.org/t/p/w1280/d9wHkwF9ttnNKuOoEIStve32jEk.jpg" alt="portada"
+                    class="fav-movie">
+                <img src="https://www.themoviedb.org/t/p/w1280/sDoXpaKZmrzCSJH63zZvQQ9A7VK.jpg" alt="portada"
+                    class="fav-movie">
+                <img src="https://www.themoviedb.org/t/p/w1280/8cnfdskwEmS1HZhenEVYt9P0IYa.jpg" alt="portada"
+                    class="fav-movie">
+                <img src="https://www.themoviedb.org/t/p/w1280/X9iFHeIYgfqoZImvdidx8b9v4R.jpg" alt="portada"
+                    class="fav-movie">
+                <img src="https://www.themoviedb.org/t/p/w1280/e0S9UXyuHE1JAoHZmyqRJISpyoS.jpg" alt="portada"
+                    class="fav-movie">
+            </div>
+
+        </section>
+        <section id="elimination-game">
+            <div id="select-winner">
+                <div class="game-movie">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <h3>VS</h3>
+                <div class="game-movie">
+                    <img src="https://www.themoviedb.org/t/p/w1280/v0eQLbzT6sWelfApuYsEkYpzufl.jpg" alt="game movie">
+                </div>
+            </div>
+            <div id="final-ranking">
+                <div class="game-movie" id="ranking-winner">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-finalist-1">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-finalist-2">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-semifinalist-1">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-semifinalist-2">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-semifinalist-3">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-semifinalist-4">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-1">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-2">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-3">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-4">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-5">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-6">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-7">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+                <div class="game-movie" id="ranking-movie-8">
+                    <img src="https://www.themoviedb.org/t/p/w1280/mW2qLgX1Z336obi5rWKQFaKw98n.jpg" alt="game movie">
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <h2>&copy; What To Watch</h2>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </footer>
 </body>
+
 </html>
