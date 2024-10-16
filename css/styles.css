@@ -74,7 +74,6 @@ main {
     box-sizing: border-box;
     background-attachment: fixed;
     background-size: cover;
-    padding: 70px 20px 0 20px;
 }
 
 footer {
@@ -125,7 +124,7 @@ footer ul {
 
 /* Mi Lista*/
 #my-favs {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     color: var(--color-5);
@@ -179,6 +178,49 @@ footer ul {
     box-sizing: border-box;
 }
 
+
+#more-info {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.703);
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+}
+
+#more-info #my-favs-card {
+    background-image: url(https://www.themoviedb.org/t/p/w1280/7h6TqPB3ESmjuVbxCxAeB1c9OB1.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 80%;
+    width: 100%;
+    display: flex;
+    color: white;
+}
+
+#left-portrait {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    height: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#left-portrait img {
+    height: 100%;
+    aspect-ratio: 10/16;
+    border-radius: 10px;
+}
+
+#right-info {
+    display: flex;
+    width: 60%;
+    height: 100%;
+    flex-direction: column;
+    padding: 50px;
+    box-sizing: border-box;
+}
 /* Juego Eliminacion */
 
 #elimination-game {
@@ -302,9 +344,6 @@ font-size: 3em;
         text-align: center;
     }
 
-    main {
-        padding: 100px 50px;
-    }
 
     #fav-grid {
         grid-template-columns: repeat(auto-fit, 180px);
