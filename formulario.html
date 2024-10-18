@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="formulario.css">
+    
+</head>
+<body id="bodyForm">
+
+<form id="questionary">
+
+<!-- Pregunta 1 -->
+<fieldset id= "Fieldset_1" class="questionaryFieldset">
+    <legend>¿Que tal ha ido tu dia?</legend>
+    <div class="horizontal-options">
+        <label> 
+            <img src="image/slightly-smiling-face-svgrepo-com.svg" alt="Foto de una cara" class="emoticons">
+            <div class=" labelImage">
+                <p class="caraTexto">Bien </p>
+                <input type="radio" name="pregunta1" value="opcion1">   
+            </div>   
+        </label>
+        <label>
+            <img src="image/neutral-face-svgrepo-com.svg" alt="Foto de una cara" class="emoticons">
+            <div class=" labelImage">
+                <p class="caraTexto">Regular </p>
+                <input type="radio" name="pregunta1" value="opcion2">  
+            </div>
+        </label>
+        <label>
+            <img src="image/slightly-frowning-face-svgrepo-com.svg" alt="Foto de una cara" class="emoticons">
+            <div class=" labelImage">                
+                <p class="caraTexto">Mal </p>
+                <input type="radio" name="pregunta1" value="opcion3">
+            </div>  
+        </label>
+    </div>
+    <button id="button_1">Siguiente</button>
+    
+    
+</fieldset>
+
+<!-- Pregunta 2 -->
+<fieldset id= "Fieldset_2" class="questionaryFieldset">
+    <legend>¿Que se acerca a lo que buscas?</legend>
+    <div class="vertical-options">
+        <label>
+            <input type="radio" name="pregunta2" value="opcion1"> Ver una película solo. 
+        <label>
+            <input type="radio" name="pregunta2" value="opcion2"> Pelicula para ver con "alguien".
+        </label>
+        <label>
+            <input type="radio" name="pregunta2" value="opcion3"> Noche de pelis con los amigos.
+        </label>
+        <label>
+            <input type="radio" name="pregunta2" value="opcion4"> Cita para ver película a la noche con mi pareja.
+        </label>
+        <label>
+            <input type="radio" name="pregunta2" value="opcion5"> Ver una película con amigos o familia.
+        </label>
+    </div>
+    <button id="button_2">Siguiente</button>
+    <button id="backButton_2">Atras</button>
+</fieldset>
+<!-- Pregunta 3 -->
+
+
+<fieldset id= "Fieldset_3" class="questionaryFieldset">
+    <legend>Por favor escoge cualquier genero en el que estes interesado</legend>
+    <div class="column-options">
+        <label><input type="checkbox" name="pregunta3" value="opcion1"> Acción</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion2"> Comedia</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion3"> Drama</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion4"> Aventura</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion5"> Intriga</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion6"> Crimen</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion7"> Romance</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion8"> Ciencia ficción</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion9"> Fantasía</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion10"> Familia</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion11"> Misterio</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion12"> Biografía</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion13"> Historia</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion14"> Animación</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion15"> Musical</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion16"> Deporte</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion17"> Desastres</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion18"> Western</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion19"> Belica</label>
+        <label><input type="checkbox" name="pregunta3" value="opcion20"> Horror</label>
+    </div>
+    <button id="button_3">Siguiente</button>
+    <button id="backButton_3">Atras</button>
+</fieldset>
+
+    
+    
+    <!-- Pregunta 4 -->
+    <fieldset id= "Fieldset_4" class="questionaryFieldset">
+        <legend>¿Como de antigua te gustaria que fuese la pelicula?</legend>
+        <div class="vertical-options">
+            <label><input type="radio" name="pregunta4" value="opcion1"> No me importa</label>
+            <label><input type="radio" name="pregunta4" value="opcion2"> Publicada en los ultimos tres años</label>
+            <label><input type="radio" name="pregunta4" value="opcion3"> Publicada en los ultimos cinco años</label>
+            <label><input type="radio" name="pregunta4" value="opcion4"> Publicada en los ultimos diez años</label>
+            <label><input type="radio" name="pregunta4" value="opcion5"> Publicada en los ultimos veinte años</label>
+        </div>
+        <button id="button_4">Siguiente</button>
+        <button id="backButton_4">Atras</button>
+    </fieldset>
+
+
+    <!-- Pregunta 5 -->
+    <fieldset id= "Fieldset_5" class="questionaryFieldset">
+        <legend>¿Es la calificación por edad de la pelicula importante para tí?</legend>
+        <div class="vertical-options">
+            <!-- 13 opciones -->
+            <label><input type="radio" name="pregunta4" value="opcion2"> Sí, me gustaria escoger la calificación con la que estoy bien.</label>
+            <label><input type="radio" name="pregunta4" value="opcion3"> No, no me importa.</label>
+        </div>
+        <button id="button_5">Siguiente</button>
+        <button id="backButton_5">Atras</button>
+
+    </fieldset>
+    
+    
+    <!-- Pregunta 6 -->
+    <fieldset id= "Fieldset_6" class="questionaryFieldset">
+        <legend>Por favor, selecciona las calificaciones de edad con las que estas comodo.</legend>
+        <div class="vertical-options">
+            <label><input type="radio" name="pregunta4" value="opcion1"> Apto para todos los publicos</label>
+            <label><input type="radio" name="pregunta4" value="opcion2"> No recomendada para menores de 7 años </label>
+            <label><input type="radio" name="pregunta4" value="opcion3"> No recomendada para menores de 12 años</label>
+            <label><input type="radio" name="pregunta4" value="opcion4"> No recomendada para menores de 16 años</label>
+            <label><input type="radio" name="pregunta4" value="opcion4"> No recomendada para menores de 18 años</label>            
+        </div>
+        <input id="button_6" type="submit" value="Enviar">
+        <button id="backButton_6">Atras</button>
+    </fieldset>
+
+    <script src="JsFormulario.js"></script>
+
+
+</form>
+
+</body>
+</html>

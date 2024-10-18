@@ -1,0 +1,76 @@
+        #bodyForm {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        #questionary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            max-width: 600px;
+        }
+
+        .questionaryFieldset {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .horizontal-options {
+            justify-content: space-between;
+            display: flex;
+            font-weight: bold;
+        }
+
+        .horizontal-options label {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+        }
+
+        .column-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            flex-wrap: wrap;
+            /* Permite que los elementos pasen a la siguiente fila */
+            justify-content: space-between;
+            /* Distribuye el espacio entre los elementos */
+            max-width: 600px;
+            margin: 0 auto;
+            /* Centra el formulario */
+        }
+
+               .vertical-options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .labelImage {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .emoticons {
+
+            width: 70%;
+
+
+        }
+
+        .caraTexto {
+            justify-content: center;
+            color: rgb(0, 0, 0);
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
+        }
