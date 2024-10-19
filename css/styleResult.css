@@ -9,13 +9,13 @@
 } */
 
 /*Estilo anverso */
-#card {
+#card, #reverse-card  {
     display: flex;
     flex-direction: row;
-    width: 60%;
-    height: 50%;
+    width: 90%;
+    height: 70vh;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
     background-size: cover;
     background-position: center;
@@ -110,20 +110,6 @@
 
 /*Estilo reverso*/
 
-#reverse-card {
-    display: flex;
-    flex-direction: row;
-    width: 60%;
-    height: 50%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    background-image: url(https://image.tmdb.org/t/p/w1280//7h6TqPB3ESmjuVbxCxAeB1c9OB1.jpg);
-    background-size: cover;
-    background-position: center;
-    box-sizing: border-box;
-
-}
 
 .poster {
     height: 100%;

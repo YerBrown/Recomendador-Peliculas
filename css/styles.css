@@ -73,8 +73,13 @@ main {
     box-sizing: border-box;
     background-attachment: fixed;
     background-size: cover;
+    padding-top: 50px;
 }
 
+.align-justify-center {
+    justify-content: center;
+    align-items: center;
+}
 footer {
     padding-top: 30px;
     background: linear-gradient(to top,
@@ -129,7 +134,8 @@ footer ul {
     justify-content: center;
     color: var(--color-5);
     gap: 20px;
-    padding: 50px 20px 20px 20px;
+    padding: 20px;
+    width: 100%;
 }
 
 #my-favs h1 {
@@ -198,11 +204,13 @@ footer ul {
 
 #more-info {
     position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     background-color: rgba(0, 0, 0, 0.703);
     width: 100vw;
     height: 100vh;
-    z-index: 11;
+    z-index: 9;
     align-items: center;
     box-sizing: border-box;
     overflow: hidden;

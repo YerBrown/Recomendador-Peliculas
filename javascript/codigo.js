@@ -1,4 +1,7 @@
 import MovieCard from "./favMovieCard.js";
+
+window.mediaLink = "https://www.themoviedb.org/t/p/w1280/";
+const mainParent = document.getElementsByTagName("main")[0];
 const PELICULAS = [
   {
     adult: false,
@@ -214,7 +217,7 @@ const GENEROS = [
     name: "Western",
   },
 ];
-window.mediaLink = "https://www.themoviedb.org/t/p/w1280/";
+
 export function getGenreById(id) {
   return GENEROS.find((genero) => genero.id == id).name;
 }
@@ -222,12 +225,16 @@ export function getFilmById(id) {
   return PELICULAS.find((pelicula) => pelicula.id == id);
 }
 function renderAllFilms(films) {
-  for (const film of films) {
-    const movieCardNode = new MovieCard(film,"fav-grid").card;
+  for (let i = 0; i < films.length; i++) {
+    if (i > 2) {
+      return;
+    }
+    const movieCardNode = new MovieCard(films[i], "fav-grid").card;
   }
+  // for (const film of films) {
+  //   const movieCardNode = new MovieCard(film, "fav-grid").card;
+  // }
 }
-// openMoreInfoPopup(PELICULAS[5].id);
-renderAllFilms(PELICULAS);
 
 let currentMovieId = -1;
 //Función para mostrar carta de anverso
@@ -276,7 +283,7 @@ function showCard(movie) {
   frontLinks.appendChild(otherMovieButton);
   frontLinks.appendChild(infoButton);
 
-  document.body.appendChild(card);
+  mainParent.appendChild(card);
 
   //Asignar contenido
   const baseImageUrl = "https://image.tmdb.org/t/p/w1280";
@@ -293,9 +300,6 @@ function showCard(movie) {
   otherMovieButton.addEventListener("click", () => showNextMovie()); // En vez de llamar a la API cada vez debería recorer un array recopilado de la primera vez
   infoButton.addEventListener("click", () => showReverseCard(currentMovie));
 }
-// showCard(PELICULAS[0]);
-
-//Función para girar la carta al pulsar Más info
 
 function showReverseCard(movie) {
   const currentMovie = movie;
@@ -343,7 +347,7 @@ function showReverseCard(movie) {
   reverseLinks.appendChild(backButton);
   //TODO Falta asignar hijo del botón o tarjeta de "dónde ver"
 
-  document.body.appendChild(reverseCard);
+  mainParent.appendChild(reverseCard);
 
   //Asignar contenido
   const baseImageUrl = "https://image.tmdb.org/t/p/w1280";
@@ -372,4 +376,68 @@ function showNextMovie() {
   }
   showCard(PELICULAS[currentMovieId]);
 }
- 
+function showMyList() {
+  const myList = document.createElement("section");
+  myList.id = "my-favs";
+
+  const title = document.createElement("h1");
+  title.innerText = "Mi Lista:";
+
+  const grid = document.createElement("div");
+  grid.id = "fav-grid";
+
+  myList.append(title, grid);
+  mainParent.appendChild(myList);
+  renderAllFilms(PELICULAS);
+}
+function openMainPage() {
+  const myListHTML = document.getElementById("my-favs");
+  if (myListHTML != null && myListHTML != undefined) {
+    mainParent.innerHTML = "";
+  }
+  const cardHTML = document.getElementById("card");
+  if (cardHTML != null && cardHTML != undefined) {
+    return;
+  }
+  const min = 0;
+  const max = Math.floor(PELICULAS.length - 1); // Redondea hacia abajo el máximo
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  showCard(PELICULAS[randomNumber]);
+
+  if (!mainParent.classList.contains("align-justify-center")) {
+    mainParent.classList.add("align-justify-center");
+  }
+}
+
+function openMyList() {
+  const cardHTML = document.getElementById("card");
+  const cardReverseHTML = document.getElementById("reverse-card");
+  if (
+    (cardHTML != null && cardHTML != undefined) ||
+    (cardReverseHTML != null && cardReverseHTML != undefined)
+  ) {
+    mainParent.innerHTML = "";
+  }
+  const myListHTML = document.getElementById("my-favs");
+  if (myListHTML != null && myListHTML != undefined) {
+    return;
+  }
+
+  showMyList();
+
+  if (mainParent.classList.contains("align-justify-center")) {
+    mainParent.classList.remove("align-justify-center");
+  }
+}
+
+function asignNavLogic() {
+  const recommend = document.getElementById("nav-recommend");
+  const myList = document.getElementById("nav-my-favs");
+  const game = document.getElementById("nav-game");
+
+  recommend.addEventListener("click", () => openMainPage());
+  myList.addEventListener("click", () => openMyList());
+}
+
+asignNavLogic();
+openMainPage();
