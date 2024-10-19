@@ -30,11 +30,13 @@ html {
 }
 
 body {
-    background-image: url(https://images.pexels.com/photos/3721374/pexels-photo-3721374.jpeg);
+    /* background-image: url(https://images.pexels.com/photos/3721374/pexels-photo-3721374.jpeg); */
+    background-color: rgb(51, 51, 51);
     background-size: cover;
     background-position: center;
-    background-attachment:fixed;
+    background-attachment: fixed;
     height: 100%;
+
 }
 
 /* Header */
@@ -54,17 +56,14 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 10;
     padding: 10px 10px 30px 10px;
     align-items: center;
     justify-content: left;
     gap: 20px;
     background: linear-gradient(to bottom,
             rgba(0, 0, 0, 0.75) 30%,
-            /* Transparente hasta el 50% del elemento */
-            rgba(0, 0, 0, 0) 100%
-            /* Negro sólido desde el 50% hacia abajo */
-        );
+            rgba(0, 0, 0, 0) 100%);
 }
 
 main {
@@ -95,6 +94,7 @@ h2 {
 h2 img {
     align-self: center;
 }
+
 footer h2 {
     font-size: .9em;
 }
@@ -124,16 +124,18 @@ footer ul {
 
 /* Mi Lista*/
 #my-favs {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     color: var(--color-5);
     gap: 20px;
+    padding: 50px 20px 20px 20px;
 }
 
 #my-favs h1 {
     text-align: center;
     align-items: center;
+
 }
 
 #fav-grid {
@@ -149,16 +151,23 @@ footer ul {
     position: relative;
     width: 100%;
     border-radius: 10px;
-    box-shadow: 10px 10px 15px rgba(0, 0, 0, 1);
+
     justify-self: center;
     aspect-ratio: 10/16;
-    overflow: hidden;  
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s ease-in-out;
+    transform: scale(1) translateY(0px);
+
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
 }
-.fav-movie img, .game-movie img{
+
+.fav-movie img,
+.game-movie img {
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
+
 .fav-movie .filter-back {
     position: absolute;
     top: 0;
@@ -169,8 +178,16 @@ footer ul {
     object-fit: cover;
     padding: 10px;
 }
+
 .fav-movie:hover {
-    transform: scale(1.05);
+    /* animation: fav-movie-hover .5s forwards; */
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 1);
+}
+
+.fav-movie:active {
+    transform: scale(1) translateY(0px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
 }
 
 .fav-movie-back {
@@ -179,22 +196,80 @@ footer ul {
 }
 
 
+
 #more-info {
+    position: fixed;
     display: flex;
     background-color: rgba(0, 0, 0, 0.703);
     width: 100vw;
     height: 100vh;
+    z-index: 11;
     align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 #more-info #my-favs-card {
-    background-image: url(https://www.themoviedb.org/t/p/w1280/7h6TqPB3ESmjuVbxCxAeB1c9OB1.jpg);
-    background-size: cover;
-    background-position: center;
+    position: relative;
     height: 80%;
     width: 100%;
     display: flex;
     color: white;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#my-favs-card {
+    /* animation: my-favs-card-in 1s forwards; */
+    mask-image: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 1) 8%,
+            rgba(255, 255, 255, 1) 92%,
+            rgba(255, 255, 255, 0)
+        )
+}
+
+@keyframes my-favs-card-in {
+    0% {
+        mask-image: linear-gradient(to bottom,
+                /* Gradiente de arriba a abajo */
+                rgba(255, 255, 255, 0),
+                /* Color transparente en la parte superior */
+                rgba(255, 255, 255, 0) 8%,
+                /* Color blanco opaco 10% del alto */
+                rgba(255, 255, 255, 0) 92%,
+                /* Color blanco opaco 90% del alto */
+                rgba(255, 255, 255, 0)
+                /* Color transparente en la parte inferior */
+            )
+    }
+
+    100% {}
+}
+
+#popup-background {
+    position: absolute;
+    z-index: -2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://www.themoviedb.org/t/p/w1280/7h6TqPB3ESmjuVbxCxAeB1c9OB1.jpg);
+    background-size: cover;
+    background-position: center;
+    filter: blur(0.5px);
+}
+
+#popup-background-filter {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.362);
+    background-size: cover;
+    background-position: center;
 }
 
 #left-portrait {
@@ -221,6 +296,36 @@ footer ul {
     padding: 50px;
     box-sizing: border-box;
 }
+
+#close {
+    display: flex;
+    justify-content: right;
+}
+
+#close-button {
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 5px;
+    transition: transform .2s linear, box-shadow .2s linear;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 1);
+    transform: scale(1);
+}
+
+#close-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 1);
+}
+
+#close-button:active {
+    background-color: white;
+    color: black;
+    transform: scale(1);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 1);
+}
+
 /* Juego Eliminacion */
 
 #elimination-game {
@@ -241,11 +346,12 @@ footer ul {
     gap: 20px;
     align-items: center;
 }
+
 #elimination-game h3 {
-font-size: 3em;
+    font-size: 3em;
 }
 
-#final-ranking{
+#final-ranking {
     display: grid;
     width: 100%;
     height: 100%;
@@ -272,14 +378,17 @@ font-size: 3em;
     grid-column: 1/3;
     grid-row: 3;
 }
+
 #ranking-semifinalist-2 {
     grid-column: 3/5;
     grid-row: 3;
 }
+
 #ranking-semifinalist-3 {
     grid-column: 5/7;
     grid-row: 3;
 }
+
 #ranking-semifinalist-4 {
     grid-column: 7/9;
     grid-row: 3;
@@ -289,30 +398,37 @@ font-size: 3em;
     grid-column: 1;
     grid-row: 4;
 }
+
 #ranking-movie-2 {
     grid-column: 2;
     grid-row: 4;
 }
+
 #ranking-movie-3 {
     grid-column: 3;
     grid-row: 4;
 }
+
 #ranking-movie-4 {
     grid-column: 4;
     grid-row: 4;
 }
+
 #ranking-movie-5 {
     grid-column: 5;
     grid-row: 4;
 }
+
 #ranking-movie-6 {
     grid-column: 6;
     grid-row: 4;
 }
+
 #ranking-movie-7 {
     grid-column: 7;
     grid-row: 4;
 }
+
 #ranking-movie-8 {
     grid-column: 8;
     grid-row: 4;
@@ -323,6 +439,7 @@ font-size: 3em;
     max-width: 100px;
     justify-self: center;
 }
+
 .game-movie {
     border-radius: 10px;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 1);
@@ -344,6 +461,9 @@ font-size: 3em;
         text-align: center;
     }
 
+    #my-favs {
+        padding-top: 100px;
+    }
 
     #fav-grid {
         grid-template-columns: repeat(auto-fit, 180px);

@@ -211,24 +211,57 @@ const GENEROS = [
   {
     id: 37,
     name: "Western",
-  }
-]
+  },
+];
 const mediaLink = "https://www.themoviedb.org/t/p/w1280/";
 
-function getGenreById(id){
-    return GENEROS.find((genero) => genero.id == id).name;
+function getGenreById(id) {
+  return GENEROS.find((genero) => genero.id == id).name;
 }
 
-function openMoreInfoPopup(film) {
+function getFilmById(id) {
+  return PELICULAS.find((pelicula) => pelicula.id == id);
+}
+function getFavMovieCard(film) {
+  const cardParent = document.createElement("div");
+  cardParent.classList.add("fav-movie");
+  cardParent.setAttribute("film-id", film.id);
+  cardParent.addEventListener('click', function(){
+    openMoreInfoPopup(this.getAttribute("film-id"));
+  });
+  const poster = document.createElement("img");
+  poster.src = mediaLink + film.poster_path;
+  poster.alt = "poster de " + film.title;
+
+  cardParent.appendChild(poster);
+
+  return cardParent;
+}
+function renderAllFilms(films) {
+  const favMoviesGrid = document.getElementById("fav-grid");
+  for (const film of films) {
+    const movieCardNode = getFavMovieCard(film);
+    favMoviesGrid.appendChild(movieCardNode);
+  }
+}
+
+function openMoreInfoPopup(filmID) {
+  const film = getFilmById(filmID);
+  if (film == null || film == {}) return;
   const backdropPath = mediaLink + film.backdrop_path;
   const posterPath = mediaLink + film.poster_path;
   const main = document.getElementsByTagName("main")[0];
   //Crear
   const popupPadre = document.createElement("section");
   popupPadre.id = "more-info";
+  const popupContent = document.createElement("div");
+  popupContent.id = "my-favs-card";
+
   const background = document.createElement("div");
-  background.id = "my-favs-card";
+  background.id = "popup-background";
   background.style.backgroundImage = `url(${backdropPath})`;
+  const backgroundFilter = document.createElement("div");
+  backgroundFilter.id = "popup-background-filter";
 
   const leftSide = document.createElement("div");
   leftSide.id = "left-portrait";
@@ -244,16 +277,29 @@ function openMoreInfoPopup(film) {
   filmTitle.textContent = `${film.title}`;
 
   const filmInfo = document.createElement("p");
-  let genres = film.genre_ids.map(id => getGenreById(id));
+  let genres = film.genre_ids.map((id) => getGenreById(id));
 
-  genres = genres.join(', ');
+  genres = genres.join(", ");
   filmInfo.textContent = `${film.release_date} | ${genres}`;
 
-  rightSide.append(filmTitle, filmInfo);
+  const close = document.createElement("div");
+  close.id = "close";
+  const closeButton = document.createElement("button");
+  closeButton.id = "close-button";
+  closeButton.textContent = "Cerrar";
+  closeButton.addEventListener("click", closeMoreInfoPopup);
+  close.appendChild(closeButton);
+  rightSide.append(close, filmTitle, filmInfo);
 
-  background.append(leftSide, rightSide);
-  popupPadre.appendChild(background);
+  popupContent.append(leftSide, rightSide, background, backgroundFilter);
+  popupPadre.appendChild(popupContent);
   main.appendChild(popupPadre);
 }
 
-openMoreInfoPopup(PELICULAS[0]);
+function closeMoreInfoPopup() {
+  const popupParent = document.getElementById("more-info");
+  popupParent.remove();
+}
+// openMoreInfoPopup(PELICULAS[5].id);
+renderAllFilms(PELICULAS);
+// import FavMovie from "./favMovieCard.js";
