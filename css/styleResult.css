@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -6,7 +6,7 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
-}
+} */
 
 /*Estilo anverso */
 #card {
@@ -71,7 +71,7 @@ body {
 }
 
 
-.links button {
+/* .links button {
     width: 30%;
     padding: 10px 0;
     font-size: 1em;
@@ -80,7 +80,7 @@ body {
     border-radius: 5px;
     color: white;
     transition: background-color 0.3s;
-}
+} */
 
 #front-links {
     display: flex;
@@ -126,17 +126,16 @@ body {
 }
 
 .poster {
-    width: 35%;
     height: 100%;
     display: flex;
-    padding: 30px 50px;
+    padding: 50px;
     box-sizing: border-box;
 }
 
-.poster .img {
+.poster img {
     height: 100%;
     aspect-ratio: 10/16;
-    border-radius: 8px;
+    border-radius:10px;
 }
 
 #reverse-card-right {
@@ -145,7 +144,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-content: center;
-    padding: 40px 50px;
+    padding: 50px;
     box-sizing: border-box;
 }
 

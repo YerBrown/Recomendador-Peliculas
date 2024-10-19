@@ -219,31 +219,13 @@ footer ul {
 }
 
 #my-favs-card {
-    /* animation: my-favs-card-in 1s forwards; */
+    display: flex;
     mask-image: linear-gradient(to bottom,
             rgba(255, 255, 255, 0),
             rgba(255, 255, 255, 1) 8%,
             rgba(255, 255, 255, 1) 92%,
             rgba(255, 255, 255, 0)
         )
-}
-
-@keyframes my-favs-card-in {
-    0% {
-        mask-image: linear-gradient(to bottom,
-                /* Gradiente de arriba a abajo */
-                rgba(255, 255, 255, 0),
-                /* Color transparente en la parte superior */
-                rgba(255, 255, 255, 0) 8%,
-                /* Color blanco opaco 10% del alto */
-                rgba(255, 255, 255, 0) 92%,
-                /* Color blanco opaco 90% del alto */
-                rgba(255, 255, 255, 0)
-                /* Color transparente en la parte inferior */
-            )
-    }
-
-    100% {}
 }
 
 #popup-background {
@@ -301,7 +283,7 @@ footer ul {
     justify-content: right;
 }
 
-#close-button {
+#close-button, .links button {
     background-color: transparent;
     border: 2px solid white;
     border-radius: 5px;
@@ -313,12 +295,12 @@ footer ul {
     transform: scale(1);
 }
 
-#close-button:hover {
+#close-button:hover, .links button:hover {
     transform: scale(1.05);
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 1);
 }
 
-#close-button:active {
+#close-button:active, .links button:active {
     background-color: white;
     color: black;
     transform: scale(1);

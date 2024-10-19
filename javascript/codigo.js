@@ -214,7 +214,7 @@ const GENEROS = [
     name: "Western",
   },
 ];
-
+window.mediaLink = "https://www.themoviedb.org/t/p/w1280/";
 export function getGenreById(id) {
   return GENEROS.find((genero) => genero.id == id).name;
 }
@@ -293,7 +293,7 @@ function showCard(movie) {
   otherMovieButton.addEventListener("click", () => showNextMovie()); // En vez de llamar a la API cada vez debería recorer un array recopilado de la primera vez
   infoButton.addEventListener("click", () => showReverseCard(currentMovie));
 }
-showCard(PELICULAS[0]);
+// showCard(PELICULAS[0]);
 
 //Función para girar la carta al pulsar Más info
 
@@ -307,6 +307,7 @@ function showReverseCard(movie) {
   //Crear estructura
   const reverseCard = document.createElement("section");
   const poster = document.createElement("div");
+  const posterImg = document.createElement("img");
   const reverseCardRight = document.createElement("div");
   const reverseMovieTitle = document.createElement("div");
   const sinopsis = document.createElement("p");
@@ -332,6 +333,7 @@ function showReverseCard(movie) {
   //Ordenar la estructura
 
   reverseCard.appendChild(poster);
+  poster.appendChild(posterImg);
   reverseCard.appendChild(reverseCardRight);
   reverseCardRight.appendChild(reverseMovieTitle);
   reverseCardRight.appendChild(sinopsis);
@@ -348,7 +350,7 @@ function showReverseCard(movie) {
   reverseCard.style.backgroundImage = `url(${
     baseImageUrl + movie.backdrop_path
   })`;
-  poster.src = baseImageUrl + movie.poster_path;
+  posterImg.src = baseImageUrl + movie.poster_path;
 
   const year = movie.release_date.split("-")[0];
   reverseMovieTitle.textContent = `${movie.title} (${year})`;
