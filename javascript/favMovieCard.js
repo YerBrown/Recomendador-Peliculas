@@ -1,20 +1,26 @@
+import MoreInfopPopup from './moreInfoPopup.js';
 class FavMovieCard {
-  constructor(film) {
+  static mediaLink = "https://www.themoviedb.org/t/p/w1280/";
+  constructor(film, parentId) {
     this.film = film;
-    this.createHTML();
+    this.parentId = parentId;
+    this.parent = document.getElementById(parentId);
+    this.createCard();
   }
-  createHTML() {
-    this.cardParent = document.createElement("div");
-    this.cardParent.classList.add("fav-movie");
-    this.cardParent.addEventListener("click", function () {
-      openMoreInfoPopup(this.film.id);
-    });
+  createCard() {
+    this.card = document.createElement("div");
+    this.card.classList.add("fav-movie");
+    this.card.addEventListener("click", ()=>this.openMoreInfo());
     this.poster = document.createElement("img");
-    this.poster.src = mediaLink + film.poster_path;
-    this.poster.alt = "poster de " + film.title;
+    this.poster.src = FavMovieCard.mediaLink + this.film.poster_path;
+    this.poster.alt = "poster de " + this.film.title;
 
-    this.cardParent.appendChild(poster);
-    this.element = cardParent;
+    this.card.appendChild(this.poster);
+    this.parent.appendChild(this.card);
+  }
+  openMoreInfo(){
+    console.log(this.film.title + ' pulsado');
+    const moreInfoPopup = new MoreInfopPopup(this.film, 'parent');
   }
 }
 

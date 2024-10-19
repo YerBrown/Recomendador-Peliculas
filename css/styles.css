@@ -180,9 +180,8 @@ footer ul {
 }
 
 .fav-movie:hover {
-    /* animation: fav-movie-hover .5s forwards; */
-    transform: scale(1.05) translateY(-5px);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 1);
+    transform: scale(1.01) translateY(-2px);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 1);
 }
 
 .fav-movie:active {

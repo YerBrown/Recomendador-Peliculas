@@ -1,3 +1,4 @@
+import MovieCard from "./favMovieCard.js";
 const PELICULAS = [
   {
     adult: false,
@@ -213,93 +214,160 @@ const GENEROS = [
     name: "Western",
   },
 ];
-const mediaLink = "https://www.themoviedb.org/t/p/w1280/";
 
-function getGenreById(id) {
+export function getGenreById(id) {
   return GENEROS.find((genero) => genero.id == id).name;
 }
-
-function getFilmById(id) {
+export function getFilmById(id) {
   return PELICULAS.find((pelicula) => pelicula.id == id);
 }
-function getFavMovieCard(film) {
-  const cardParent = document.createElement("div");
-  cardParent.classList.add("fav-movie");
-  cardParent.setAttribute("film-id", film.id);
-  cardParent.addEventListener('click', function(){
-    openMoreInfoPopup(this.getAttribute("film-id"));
-  });
-  const poster = document.createElement("img");
-  poster.src = mediaLink + film.poster_path;
-  poster.alt = "poster de " + film.title;
-
-  cardParent.appendChild(poster);
-
-  return cardParent;
-}
 function renderAllFilms(films) {
-  const favMoviesGrid = document.getElementById("fav-grid");
   for (const film of films) {
-    const movieCardNode = getFavMovieCard(film);
-    favMoviesGrid.appendChild(movieCardNode);
+    const movieCardNode = new MovieCard(film,"fav-grid").card;
   }
-}
-
-function openMoreInfoPopup(filmID) {
-  const film = getFilmById(filmID);
-  if (film == null || film == {}) return;
-  const backdropPath = mediaLink + film.backdrop_path;
-  const posterPath = mediaLink + film.poster_path;
-  const main = document.getElementsByTagName("main")[0];
-  //Crear
-  const popupPadre = document.createElement("section");
-  popupPadre.id = "more-info";
-  const popupContent = document.createElement("div");
-  popupContent.id = "my-favs-card";
-
-  const background = document.createElement("div");
-  background.id = "popup-background";
-  background.style.backgroundImage = `url(${backdropPath})`;
-  const backgroundFilter = document.createElement("div");
-  backgroundFilter.id = "popup-background-filter";
-
-  const leftSide = document.createElement("div");
-  leftSide.id = "left-portrait";
-  const rightSide = document.createElement("div");
-  rightSide.id = "right-info";
-
-  const poster = document.createElement("img");
-  poster.src = posterPath;
-  poster.alt = "portada";
-  leftSide.appendChild(poster);
-
-  const filmTitle = document.createElement("h3");
-  filmTitle.textContent = `${film.title}`;
-
-  const filmInfo = document.createElement("p");
-  let genres = film.genre_ids.map((id) => getGenreById(id));
-
-  genres = genres.join(", ");
-  filmInfo.textContent = `${film.release_date} | ${genres}`;
-
-  const close = document.createElement("div");
-  close.id = "close";
-  const closeButton = document.createElement("button");
-  closeButton.id = "close-button";
-  closeButton.textContent = "Cerrar";
-  closeButton.addEventListener("click", closeMoreInfoPopup);
-  close.appendChild(closeButton);
-  rightSide.append(close, filmTitle, filmInfo);
-
-  popupContent.append(leftSide, rightSide, background, backgroundFilter);
-  popupPadre.appendChild(popupContent);
-  main.appendChild(popupPadre);
-}
-
-function closeMoreInfoPopup() {
-  const popupParent = document.getElementById("more-info");
-  popupParent.remove();
 }
 // openMoreInfoPopup(PELICULAS[5].id);
 renderAllFilms(PELICULAS);
-// import FavMovie from "./favMovieCard.js";
+
+let currentMovieId = -1;
+//Función para mostrar carta de anverso
+function showCard(movie) {
+  const currentMovie = movie;
+  const normalCard = document.getElementById("card");
+  const reverseCard = document.getElementById("reverse-card");
+
+  if (normalCard != null && normalCard != undefined) {
+    normalCard.remove();
+  }
+  if (reverseCard != null && reverseCard != undefined) {
+    reverseCard.remove();
+  }
+
+  //Crear estructura
+  const card = document.createElement("section");
+  const movieTitle = document.createElement("h2");
+  const cardRight = document.createElement("div");
+  const movieData = document.createElement("div");
+
+  //TODO me falta meter la lista ul, li con Género,Año,Director
+  const frontLinks = document.createElement("div");
+  const favButton = document.createElement("button");
+  const otherMovieButton = document.createElement("button");
+  const infoButton = document.createElement("button");
+
+  //Añadir ID,class
+  card.id = "card";
+  movieTitle.classList.add("movie-title");
+  cardRight.id = "card-right";
+  movieData.id = "movie-data";
+  //TODO me falta añadir la ul-li
+  frontLinks.id = "front-links";
+  frontLinks.classList.add("links");
+  favButton.classList.add("fav-button");
+  otherMovieButton.classList.add("other-movie-button");
+  infoButton.classList.add("info-button");
+  //Ordenar la estructura
+  card.appendChild(movieTitle);
+  card.appendChild(cardRight);
+  cardRight.appendChild(movieData);
+  movieData.appendChild; //TODO meter la ul li como hijo
+  cardRight.appendChild(frontLinks);
+  frontLinks.appendChild(favButton);
+  frontLinks.appendChild(otherMovieButton);
+  frontLinks.appendChild(infoButton);
+
+  document.body.appendChild(card);
+
+  //Asignar contenido
+  const baseImageUrl = "https://image.tmdb.org/t/p/w1280";
+  card.style.backgroundImage = `url(${baseImageUrl + movie.backdrop_path})`;
+
+  movieTitle.textContent = movie.title;
+  movieData; //TODO: Me falta meter la ul li de arriba
+  favButton.textContent = "Añadir a favoritos";
+  otherMovieButton.textContent = "Otra película";
+  infoButton.textContent = "Más info";
+
+  //Eventlistener para los tres botones
+  favButton.addEventListener("click", () => ""); //TODO esto debería añadir la película con todos sus datos a la lista de favoritos y cambiar el icono estrella del css por uno relleno
+  otherMovieButton.addEventListener("click", () => showNextMovie()); // En vez de llamar a la API cada vez debería recorer un array recopilado de la primera vez
+  infoButton.addEventListener("click", () => showReverseCard(currentMovie));
+}
+showCard(PELICULAS[0]);
+
+//Función para girar la carta al pulsar Más info
+
+function showReverseCard(movie) {
+  const currentMovie = movie;
+  //TODO: Creo que me falta vaciar la tarjeta de alguna manera antes de mostrar la siguiente, en ambas funciones
+  const card = document.getElementById("card");
+  if (card != null && card != undefined) {
+    card.remove();
+  }
+  //Crear estructura
+  const reverseCard = document.createElement("section");
+  const poster = document.createElement("div");
+  const reverseCardRight = document.createElement("div");
+  const reverseMovieTitle = document.createElement("div");
+  const sinopsis = document.createElement("p");
+  const reverseLinks = document.createElement("div");
+  const favButton = document.createElement("button");
+  const playButton = document.createElement("button");
+  const backButton = document.createElement("button");
+  //TODO Falta añadir botón o tarjeta de "dónde ver"
+
+  //Añadir ID, class
+  reverseCard.id = "reverse-card";
+  poster.classList.add("poster");
+  reverseCardRight.id = "reverse-card-right";
+  reverseMovieTitle.classList.add("reverse-movie-title");
+  sinopsis.id = "sinopsis";
+  reverseLinks.id = "reverse-links";
+  reverseLinks.classList.add("links");
+  favButton.classList.add("fav-button");
+  playButton.classList.add("play-button");
+  backButton.classList.add("back-button");
+  //TODO Falta asignar ID del botón o tarjeta de "dónde ver"
+
+  //Ordenar la estructura
+
+  reverseCard.appendChild(poster);
+  reverseCard.appendChild(reverseCardRight);
+  reverseCardRight.appendChild(reverseMovieTitle);
+  reverseCardRight.appendChild(sinopsis);
+  reverseCardRight.appendChild(reverseLinks);
+  reverseLinks.appendChild(favButton);
+  reverseLinks.appendChild(playButton);
+  reverseLinks.appendChild(backButton);
+  //TODO Falta asignar hijo del botón o tarjeta de "dónde ver"
+
+  document.body.appendChild(reverseCard);
+
+  //Asignar contenido
+  const baseImageUrl = "https://image.tmdb.org/t/p/w1280";
+  reverseCard.style.backgroundImage = `url(${
+    baseImageUrl + movie.backdrop_path
+  })`;
+  poster.src = baseImageUrl + movie.poster_path;
+
+  const year = movie.release_date.split("-")[0];
+  reverseMovieTitle.textContent = `${movie.title} (${year})`;
+
+  sinopsis.textContent = movie.overview;
+  favButton.textContent = "Añadir a favoritos";
+  playButton.textContent = "Ver trailer";
+  backButton.textContent = "Volver";
+
+  /* favButton.addEventListener("click") */ //TODO esto debería añadir la película con todos sus datos a la lista de favoritos y cambiar el icono estrella del css por uno relleno
+  playButton.addEventListener("click", () => "iframe"); // TODO: Aquí tiene que saltar el iframe para que se reproduzca el trailer
+  backButton.addEventListener("click", () => showCard(currentMovie));
+}
+
+function showNextMovie() {
+  ++currentMovieId;
+  if (currentMovieId >= PELICULAS.length) {
+    currentMovieId = 0;
+  }
+  showCard(PELICULAS[currentMovieId]);
+}
+ 
