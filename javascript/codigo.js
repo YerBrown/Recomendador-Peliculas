@@ -135,15 +135,25 @@ const PELICULAS = [
     vote_count: 112,
   },
 ];
-
+let currentMovieId=-1;
 //Función para mostrar carta de anverso
 function showCard(movie) {
-  //TODO: Creo que me falta vaciar la tarjeta de alguna manera antes de mostrar la siguiente, en ambas funciones
-  movie = (PELICULAS[0]);
+
+  const currentMovie = movie
+  const normalCard = document.getElementById("card")
+  const reverseCard = document.getElementById("reverse-card")
+
+ if(normalCard !=null && normalCard !=undefined){
+  normalCard.remove()
+ }
+ if(reverseCard !=null && reverseCard !=undefined){
+  reverseCard.remove()
+ }
+ 
 
   //Crear estructura
   const card = document.createElement("section")
-  const movieTitle = document.createElement("div")
+  const movieTitle = document.createElement("h2")
   const cardRight = document.createElement("div")
   const movieData = document.createElement("div")
 
@@ -155,17 +165,15 @@ function showCard(movie) {
 
   //Añadir ID,class
   card.id = "card"
-  movieTitle.classList.add = "movie-title"
+  movieTitle.classList.add("movie-title")
   cardRight.id = "card-right"
   movieData.id = "movie-data"
-
   //TODO me falta añadir la ul-li
   frontLinks.id = "front-links"
-  frontLinks.classList.add = "links"
-  favButton.classList.add = "fav-button"
-  otherMovieButton.classList.add = "other-movie-button"
-  infoButton.classList.add = "info-button"
-
+  frontLinks.classList.add("links")
+  favButton.classList.add("fav-button")
+  otherMovieButton.classList.add("other-movie-button")
+  infoButton.classList.add("info-button")
   //Ordenar la estructura
   card.appendChild(movieTitle)
   card.appendChild(cardRight)
@@ -180,27 +188,31 @@ function showCard(movie) {
   
   //Asignar contenido
   const baseImageUrl = "https://image.tmdb.org/t/p/w1280"
-  card.style.backgroundImage = + `url(${baseImageUrl + movie.backdrop_path})`;
+  card.style.backgroundImage = `url(${baseImageUrl + movie.backdrop_path})`;
 
-  movieTitle = movie.title
+  movieTitle.textContent = movie.title
   movieData //TODO: Me falta meter la ul li de arriba
   favButton.textContent = "Añadir a favoritos"
   otherMovieButton.textContent = "Otra película"
   infoButton.textContent = "Más info"
 
   //Eventlistener para los tres botones
-  favButton.addEventListener("click")//TODO esto debería añadir la película con todos sus datos a la lista de favoritos y cambiar el icono estrella del css por uno relleno
-  otherMovieButton.addEventListener("click", () => this.showCard()) // Creo que esto no tiene sentido que esté dentro de la misma función
-  infoButton.addEventListener("click", () => this.showReverseCard())
+  favButton.addEventListener("click",()=> "")//TODO esto debería añadir la película con todos sus datos a la lista de favoritos y cambiar el icono estrella del css por uno relleno
+  otherMovieButton.addEventListener("click", () => showNextMovie()) // En vez de llamar a la API cada vez debería recorer un array recopilado de la primera vez
+  infoButton.addEventListener("click", () => showReverseCard(currentMovie))
   
 }
-
+showCard(PELICULAS[0])
 
 //Función para girar la carta al pulsar Más info
 
 function showReverseCard(movie) {
+  const currentMovie = movie
 //TODO: Creo que me falta vaciar la tarjeta de alguna manera antes de mostrar la siguiente, en ambas funciones
-  movie = (PELICULAS[0]);
+ const card = document.getElementById("card")
+ if(card !=null && card !=undefined){
+  card.remove()
+ }
   //Crear estructura
   const reverseCard = document.createElement("section")
   const poster = document.createElement("div")
@@ -242,7 +254,7 @@ function showReverseCard(movie) {
 
   //Asignar contenido
   const baseImageUrl = "https://image.tmdb.org/t/p/w1280"
-  reverseCard.style.backgroundImage = + `url(${baseImageUrl + movie.backdrop_path})`;
+  reverseCard.style.backgroundImage = `url(${baseImageUrl + movie.backdrop_path})`;
   poster.src = baseImageUrl + movie.poster_path
 
   const year = movie.release_date.split('-')[0];
@@ -253,9 +265,17 @@ function showReverseCard(movie) {
   playButton.textContent = "Ver trailer"
   backButton.textContent = "Volver"
 
-  favButton.addEventListener("click")//TODO esto debería añadir la película con todos sus datos a la lista de favoritos y cambiar el icono estrella del css por uno relleno
+  /* favButton.addEventListener("click") *///TODO esto debería añadir la película con todos sus datos a la lista de favoritos y cambiar el icono estrella del css por uno relleno
   playButton.addEventListener("click", () => "iframe") // TODO: Aquí tiene que saltar el iframe para que se reproduzca el trailer
-  backButton.addEventListener("click", () => this.showCard())
+  backButton.addEventListener("click", () => showCard(currentMovie))
 
 
+}
+
+function showNextMovie(){
+  ++currentMovieId
+  if(currentMovieId >= PELICULAS.length){
+    currentMovieId = 0
+  }
+  showCard(PELICULAS[currentMovieId])
 }

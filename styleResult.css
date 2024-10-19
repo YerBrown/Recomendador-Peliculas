@@ -10,14 +10,13 @@ body {
 
 /*Estilo anverso */
 #card {
-    display: none;
+    display: flex;
     flex-direction: row;
     width: 60%;
     height: 50%;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
-    background-image: url(https://image.tmdb.org/t/p/w1280//7h6TqPB3ESmjuVbxCxAeB1c9OB1.jpg);
     background-size: cover;
     background-position: center;
     box-sizing: border-box;
@@ -82,13 +81,14 @@ body {
     color: white;
     transition: background-color 0.3s;
 }
-#front-links{
+
+#front-links {
     display: flex;
     justify-content: space-between;
     padding-bottom: 0px;
     align-items: end;
     padding: 10px;
-   
+
 }
 
 
@@ -100,7 +100,8 @@ body {
     padding-right: 10%;
 
 }
-.icon{
+
+.icon {
     width: 20px;
     height: auto;
     vertical-align: middle;
@@ -138,17 +139,17 @@ body {
     border-radius: 8px;
 }
 
-#reverse-card-right{
-display: flex;
-width: 65%;
-flex-direction: column;
-justify-content: space-between;
-align-content: center;
-padding: 40px 50px;
-box-sizing: border-box;
+#reverse-card-right {
+    display: flex;
+    width: 65%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    padding: 40px 50px;
+    box-sizing: border-box;
 }
 
-.reverse-movie-title{
+.reverse-movie-title {
     font-size: 2em;
     font-weight: bold;
     color: white;
@@ -156,15 +157,17 @@ box-sizing: border-box;
 
 #sinopsis {
     font-style: italic;
-    color:white;
+    color: white;
 }
-#reverse-links{
+
+#reverse-links {
     display: flex;
     justify-content: space-between;
     padding-bottom: 0px;
     align-items: end;
-   
+
 }
+
 .reverse-links button {
     width: 30%;
     padding: 10px 0;
@@ -178,16 +181,18 @@ box-sizing: border-box;
 
 /* Media queries para smartphones */
 @media screen and (max-width: 768px) {
+
     /* Estilos para #card */
     #card {
         flex-direction: column;
-        
-      
+
+
     }
 
     .movie-title {
         width: 100%;
-        font-size: 2em; /* Reducir tamaño de fuente */
+        font-size: 2em;
+        /* Reducir tamaño de fuente */
         padding-top: 5px;
         text-align: center;
     }
@@ -195,18 +200,18 @@ box-sizing: border-box;
     #card-right {
         width: 100%;
         justify-content: space-between;
-        
+
     }
 
     #movie-data {
         padding-top: 5px;
-         
+
     }
 
     #front-links {
         width: 100%;
         justify-content: space-around;
-        
+
     }
 
     /* Estilos para #reverse-card */
@@ -226,7 +231,7 @@ box-sizing: border-box;
         height: auto;
         max-height: 200px;
         width: auto;
-        
+
     }
 
     /* Ocultar elementos en vista móvil */
@@ -251,14 +256,15 @@ box-sizing: border-box;
     .reverse-links button {
         font-size: 0.9em;
         padding: 8px 15px;
-        
+
     }
-    .fav-button{
-display: none;
+
+    .fav-button {
+        display: none;
     }
 
     .icon {
-        width: 15px; /* Iconos más pequeños en móvil */
+        width: 15px;
+        /* Iconos más pequeños en móvil */
     }
 }
-
