@@ -225,15 +225,9 @@ export function getFilmById(id) {
   return PELICULAS.find((pelicula) => pelicula.id == id);
 }
 function renderAllFilms(films) {
-  for (let i = 0; i < films.length; i++) {
-    if (i > 2) {
-      return;
-    }
-    const movieCardNode = new MovieCard(films[i], "fav-grid").card;
+  for (const film of films) {
+    const movieCardNode = new MovieCard(film, "fav-grid").card;
   }
-  // for (const film of films) {
-  //   const movieCardNode = new MovieCard(film, "fav-grid").card;
-  // }
 }
 
 let currentMovieId = -1;
