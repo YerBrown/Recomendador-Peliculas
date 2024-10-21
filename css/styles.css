@@ -73,7 +73,7 @@ main {
     box-sizing: border-box;
     background-attachment: fixed;
     background-size: cover;
-    padding-top: 50px;
+    padding: 50px 0;
 }
 
 .align-justify-center {
@@ -81,6 +81,9 @@ main {
     align-items: center;
 }
 footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
     padding-top: 30px;
     background: linear-gradient(to top,
             rgba(0, 0, 0, 0.75) 30%,
@@ -130,6 +133,7 @@ footer ul {
 /* Mi Lista*/
 #my-favs {
     display: flex;
+    box-sizing: border-box;
     flex-direction: column;
     justify-content: center;
     color: var(--color-5);
@@ -165,6 +169,10 @@ footer ul {
     transform: scale(1) translateY(0px);
 
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
+}
+
+.fav-movie-hide {
+    display: none;
 }
 
 .fav-movie img,
@@ -291,7 +299,7 @@ footer ul {
     justify-content: right;
 }
 
-#close-button, .links button {
+button{
     background-color: transparent;
     border: 2px solid white;
     border-radius: 5px;
@@ -303,12 +311,12 @@ footer ul {
     transform: scale(1);
 }
 
-#close-button:hover, .links button:hover {
+button:hover {
     transform: scale(1.05);
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 1);
 }
 
-#close-button:active, .links button:active {
+button:active {
     background-color: white;
     color: black;
     transform: scale(1);
@@ -316,6 +324,79 @@ footer ul {
 }
 
 /* Juego Eliminacion */
+
+
+#start-game-screen{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    max-width: 500px;
+    align-items: center;
+    color: white;
+    background-color: #F24C3D;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 20px 50px;
+    gap: 20px;
+}
+#select-movie {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 50%;
+    max-width: 500px;
+    background-color: #F24C3D;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 20px 50px;
+    gap: 50px;
+}
+#select-options {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+}
+#select-movie img{
+    width: 40%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #elimination-game {
     display: none;

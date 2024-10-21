@@ -1,4 +1,4 @@
-import { getGenreById, getFilmById } from "./codigo.js";
+import { getGenreById, getFilmById } from "./movie-list.js";
 class MoreInfoPopup {
   constructor(film, parentId) {
     this.film = film;
