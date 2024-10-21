@@ -153,14 +153,37 @@ const GENEROS = [
          e.preventDefault();
          document.getElementById(formularios[currentIndex].id).style.display = 'none';
 
-        // Verifica si el índice actual es menor que el total de formularios menos uno
+        // Verifica si el índice actual es superior a uno
         if (currentIndex > 0) {
             currentIndex--;  // Si es así, disminuye el índice para pasar al anterior formulario
         } 
 
-        // Muestra el siguiente fieldset
+        // Muestra el anterior fieldset
         document.getElementById(formularios[currentIndex].id).style.display = 'block';
     });
 }
 });
+
+function showGenres (generos){
+for (const genero of generos) {
+
+ const generoLabel = document.createElement("label")
+ const generoInput = document.createElement("input")
+ 
+generoLabel.innerText = genero.name
+generoLabel.appendChild(generoInput)
+
+generoInput.type = "checkbox"
+generoInput.name = genero.name
+generoInput.value = genero.id
+
+const optionsParent = document.getElementsByClassName("column-options")[0]
+optionsParent.appendChild(generoLabel)
+
+
+}  
+}
+showGenres(GENEROS)
+//<input type="checkbox" name="pregunta3" value="opcion1">  Acción
+// tiene que preguntar genero, año de salida, average point, el provider (DONDE VERLO), duracion,
 
