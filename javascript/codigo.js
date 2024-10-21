@@ -1,3 +1,7 @@
+import MovieCard from "./favMovieCard.js";
+
+window.mediaLink = "https://www.themoviedb.org/t/p/w1280/";
+const mainParent = document.getElementsByTagName("main")[0];
 const PELICULAS = [
   {
     adult: false,
@@ -143,7 +147,6 @@ const PELICULAS = [
     key: "nAfFq76Geb4",
   },
 ];
-let currentMovieId = 0; //TODO: Antes estaba en -1 y fallaba el primer cambio, ahora eso está arreglado pero falta por ver si se ha estropeado otra cosa
 const GENEROS = [
   {
     id: 28,
@@ -222,124 +225,23 @@ const GENEROS = [
     name: "Western",
   },
 ];
-const TRAILERS = [
-  /*sustancia*/
-  {
-    id: 933260,
-    "iso_639_1": "es",
-    "iso_3166_1": "ES",
-    "name": "Tráiler oficial (VOSE)",
-    key: "2M03oTyJdHc",
-    "site": "YouTube",
-    "size": 1080,
-    "type": "Trailer",
-    "official": true,
-    "published_at": "2024-09-13T09:03:48.000Z",
-    "id": "66f93d447f13b7b12aa248fe"
-  },
-  /*Deadpool*/
-  {
-    id: 533535,
-    "iso_639_1": "es",
-    "iso_3166_1": "ES",
-    "name": "Tráiler Oficial en castellano",
-    key: "tTM5weeCFvQ",
-    "site": "YouTube",
-    "size": 1080,
-    "type": "Trailer",
-    "official": true,
-    "published_at": "2024-04-22T15:10:23.000Z",
-    "id": "66268eeb221ba6017c160ae0"
-  },
-  /*Bitelchus*/
-  {
-    id: 917496,
-    "iso_639_1": "es",
-    "iso_3166_1": "ES",
-    "name": "Tráiler Oficial en español",
-    key: "bffGA7Vh0uE",
-    "site": "YouTube",
-    "size": 1080,
-    "type": "Trailer",
-    "official": true,
-    "published_at": "2024-05-23T16:00:35.000Z",
-    "id": "66501af5691dda35fb0694bb"
-  },
-  /*El hoyo*/
-  {
-    id: 1125510,
-    "iso_639_1": "es",
-    "iso_3166_1": "ES",
-    "name": "Avance oficial",
-    key: "tginyAWKUN8",
-    "site": "YouTube",
-    "size": 1080,
-    "type": "Teaser",
-    "official": true,
-    "published_at": "2024-07-11T13:00:00.000Z",
-    "id": "6694e99073ff6d6eddf4b8c5"
-  },
-  /*Wild robot*/
-  {
-    id: 1184918,
-    "iso_639_1": "es",
-    "iso_3166_1": "ES",
-    "name": "Tráiler Final en español",
-    key: "TTu_rks8mUc",
-    "site": "YouTube",
-    "size": 1080,
-    "type": "Trailer",
-    "official": true,
-    "published_at": "2024-09-10T15:25:38.000Z",
-    "id": "66e1b69ca4a6446236051a84"
-  },
-  /*Terrifier*/
-  {
-    id: 1034541,
-    "iso_639_1": "en",
-    "iso_3166_1": "US",
-    "name": "New Theatrical Trailer",
-    key: "D6mC2rXALOE",
-    "site": "YouTube",
-    "size": 1080,
-    "type": "Trailer",
-    "official": true,
-    "published_at": "2024-08-28T18:03:52.000Z",
-    "id": "66cf67e6dff29121312b9c9e"
-  },
-  /*Gru*/
-  {
-    id: 519182,
-    "iso_639_1": "es",
-    "iso_3166_1": "ES",
-    "name": "Tráiler Oficial en español",
-    key: "ulPKDcGwxUg",
-    "site": "YouTube",
-    "size": 1080,
-    "type": "Trailer",
-    "official": true,
-    "published_at": "2024-01-28T21:54:39.000Z",
-    "id": "65b703e55e14e5017bad975b"
-  },
-  /*Hellboy*/
-  {
-    id: 1087822,
-    "iso_639_1": "es",
-    "iso_3166_1": "ES",
-    "name": "First Trailer for HELLBOY: THE CROOKED MAN 🔥",
-    key: "nAfFq76Geb4",
-    "site": "YouTube",
-    "size": 720,
-    "type": "Trailer",
-    "official": false,
-    "published_at": "2024-07-01T12:31:07.000Z",
-    "id": "6682a6b5ef0e5a6aa7024657"
-  }
-]
 
+export function getGenreById(id) {
+  return GENEROS.find((genero) => genero.id == id).name;
+}
+export function getFilmById(id) {
+  return PELICULAS.find((pelicula) => pelicula.id == id);
+}
+function renderAllFilms(films) {
+  for (const film of films) {
+    const movieCardNode = new MovieCard(film, "fav-grid").card;
+  }
+}
+
+let currentMovieId = 0;
 //Función para mostrar carta de anverso
 function showCard(movie) {
-
+  
   const currentMovie = movie
   const normalCard = document.getElementById("card")
   const reverseCard = document.getElementById("reverse-card")
@@ -429,8 +331,6 @@ function showCard(movie) {
 }
 showCard(PELICULAS[0])
 
-
-
 //Función para girar la carta al pulsar Más info
 function showReverseCard(movie) {
   const currentMovie = movie
@@ -504,6 +404,7 @@ function showReverseCard(movie) {
 
 
 }
+
 //Función para mostrar otra película del array que sacamos del form
 function showNextMovie() {
   setTimeout(() => {
@@ -566,4 +467,68 @@ function showTrailer(movie) {
 
 
 }
+function showMyList() {
+  const myList = document.createElement("section");
+  myList.id = "my-favs";
 
+  const title = document.createElement("h1");
+  title.innerText = "Mi Lista:";
+
+  const grid = document.createElement("div");
+  grid.id = "fav-grid";
+
+  myList.append(title, grid);
+  mainParent.appendChild(myList);
+  renderAllFilms(PELICULAS);
+}
+function openMainPage() {
+  const myListHTML = document.getElementById("my-favs");
+  if (myListHTML != null && myListHTML != undefined) {
+    mainParent.innerHTML = "";
+  }
+  const cardHTML = document.getElementById("card");
+  if (cardHTML != null && cardHTML != undefined) {
+    return;
+  }
+  const min = 0;
+  const max = Math.floor(PELICULAS.length - 1); // Redondea hacia abajo el máximo
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  showCard(PELICULAS[randomNumber]);
+
+  if (!mainParent.classList.contains("align-justify-center")) {
+    mainParent.classList.add("align-justify-center");
+  }
+}
+
+function openMyList() {
+  const cardHTML = document.getElementById("card");
+  const cardReverseHTML = document.getElementById("reverse-card");
+  if (
+    (cardHTML != null && cardHTML != undefined) ||
+    (cardReverseHTML != null && cardReverseHTML != undefined)
+  ) {
+    mainParent.innerHTML = "";
+  }
+  const myListHTML = document.getElementById("my-favs");
+  if (myListHTML != null && myListHTML != undefined) {
+    return;
+  }
+
+  showMyList();
+
+  if (mainParent.classList.contains("align-justify-center")) {
+    mainParent.classList.remove("align-justify-center");
+  }
+}
+
+function asignNavLogic() {
+  const recommend = document.getElementById("nav-recommend");
+  const myList = document.getElementById("nav-my-favs");
+  const game = document.getElementById("nav-game");
+
+  recommend.addEventListener("click", () => openMainPage());
+  myList.addEventListener("click", () => openMyList());
+}
+
+asignNavLogic();
+openMainPage();
