@@ -8,8 +8,8 @@ class MoreInfoPopup {
   }
   createMoreInfoPopup() {
     // Montar las url completas de las imagenes
-    const backdropPath = window.mediaLink + this.film.backdrop_path;
-    const posterPath = window.mediaLink + this.film.poster_path;
+    const backdropPath = window.mediaLink + this.film.backdropPath;
+    const posterPath = window.mediaLink + this.film.posterPath;
 
     // Crear el popup y su estructura
     this.popup = document.createElement("section");
@@ -50,12 +50,12 @@ class MoreInfoPopup {
     posterImg.alt = "portada de " + this.film.title;
 
     // Añadir el titulo en base a la pelicula
-    const year = this.film.release_date.split("-")[0];
+    const year = this.film.releaseDate.split("-")[0];
     movieTitle.textContent = `${this.film.title} (${year})`;
 
     // Añadir la informacion sobre la pelicula
     const filmInfo = document.createElement("p");
-    let genres = this.film.genre_ids.map((id) => getGenreById(id));
+    let genres = this.film.genreIds.map((id) => getGenreById(id));
     genres = genres.join(", ");
     filmInfo.textContent = `${this.film.release_date} | ${genres}`;
     sinopsis.textContent = this.film.overview;

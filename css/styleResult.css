@@ -1,4 +1,53 @@
-/* body {
+/*Iframe*/
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+} 
+
+.modal-content {
+    position: relative;
+    width: 80%;
+    height: 80%;
+}
+#trailer-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}   
+
+.close-button {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    transition: background-color 0.3s;
+}
+
+.close-button:hover {
+    background-color: #e0e0e0;
+}
+
+
+body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -6,26 +55,59 @@
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
-} */
+}
 
 /*Estilo anverso */
-#card, #reverse-card  {
+#card-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    flex-direction: column;
+
+}
+
+#card{
+
     display: flex;
     flex-direction: row;
-    width: 90%;
-    height: 70vh;
+    width: 60%;
+    height: 50%;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
     background-size: cover;
     background-position: center;
     box-sizing: border-box;
-
+    text-shadow: 5px 5px 10px black;
 }
 
-#card h2, #reverse-card h2 {
-    text-shadow:3px 3px 5px black;
+#normal-card {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
 }
+
+
+.other-movie-button {
+    width: 60%;
+    height: 30px;
+    margin-top: 10px;
+    font-size: 1em;
+    background-color: rgb(12, 2, 2);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.3s;
+}
+
 .movie-title {
     width: 50%;
     text-align: center;
@@ -48,21 +130,29 @@
     display: flex;
     flex-direction: column;
     color: white;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-content: center;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
-#movie-data ul {
-    padding: 0;
-    margin: 50px;
-}
-
-#movie-data ul li {
+#movie-data-list {
+    margin: 20px;
     list-style: none;
-    text-align: center;
-    margin-bottom: 10px;
-    justify-content: space-around;
+    
+}
+
+#movie-data-list li {
+    padding: 20px;
+    list-style: none;
+    text-align: center;   
+}
+#watch-now{
+    color:white;
+}
+#streaming-platforms{
+    border: dotted white 1px;
+    color: white;
+    padding: 20px;
 }
 
 .links {
@@ -74,7 +164,7 @@
 }
 
 
-/* .links button {
+.links button {
     width: 30%;
     padding: 10px 0;
     font-size: 1em;
@@ -83,7 +173,7 @@
     border-radius: 5px;
     color: white;
     transition: background-color 0.3s;
-} */
+}
 
 #front-links {
     display: flex;
@@ -93,7 +183,6 @@
     padding: 10px;
 
 }
-
 
 
 .otra-pelicula {
@@ -113,18 +202,26 @@
 
 /*Estilo reverso*/
 
+#reverse-card {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
 
 .poster {
+    width: 35%;
     height: 100%;
     display: flex;
-    padding: 50px;
+    padding: 30px 50px;
     box-sizing: border-box;
 }
 
-.poster img {
+.poster .img {
     height: 100%;
     aspect-ratio: 10/16;
-    border-radius:10px;
+    border-radius: 8px;
 }
 
 #reverse-card-right {
@@ -133,7 +230,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-content: center;
-    padding: 50px;
+    padding: 40px 50px;
     box-sizing: border-box;
 }
 

@@ -11,7 +11,7 @@ class FavMovieCard {
     this.card.classList.add("fav-movie");
     this.card.addEventListener("click", ()=>this.openMoreInfo());
     this.poster = document.createElement("img");
-    this.poster.src = window.mediaLink + this.film.poster_path;
+    this.poster.src = window.mediaLink + this.film.posterPath;
     this.poster.alt = "poster de " + this.film.title;
 
     this.card.appendChild(this.poster);
