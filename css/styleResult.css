@@ -23,6 +23,9 @@
 
 }
 
+#card h2, #reverse-card h2 {
+    text-shadow:3px 3px 5px black;
+}
 .movie-title {
     width: 50%;
     text-align: center;
