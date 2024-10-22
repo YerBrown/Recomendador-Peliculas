@@ -35,7 +35,8 @@ const formularios = [
     }
 ];
 
-// Array de objetos que manda una id al pulsar el boton submit para que al ser recibida de un listado de peliculas.
+// Array de objetos que manda una id al pulsar el boton submit para que al ser recibida de un 
+//listado de peliculas.
 const GENEROS = [
     {
       id: 28,
@@ -164,26 +165,56 @@ const GENEROS = [
 }
 });
 
-function showGenres (generos){
-for (const genero of generos) {
+function showGenres(generos) {
+  // Definimos una función llamada "showGenres" que toma un argumento "generos".
+  // Este argumento es un array que contiene objetos con información sobre géneros (como nombre e id).
 
- const generoLabel = document.createElement("label")
- const generoInput = document.createElement("input")
- 
-generoLabel.innerText = genero.name
-generoLabel.appendChild(generoInput)
+  for (const genero of generos) {
+      // Utilizamos un bucle for...of para iterar sobre cada elemento del array "generos".
+      // En cada iteración, "genero" es un objeto individual del array con propiedades 
+      // como "name" e "id".
 
-generoInput.type = "checkbox"
-generoInput.name = genero.name
-generoInput.value = genero.id
+      // Creamos un nuevo elemento <label> en el DOM.
+      const generoLabel = document.createElement("label");
 
-const optionsParent = document.getElementsByClassName("column-options")[0]
-optionsParent.appendChild(generoLabel)
+      // Creamos un nuevo elemento <input> en el DOM, que será nuestro checkbox.
+      const generoInput = document.createElement("input");
 
+      // Establecemos el texto del label. Este texto se mostrará al lado del checkbox.
+      generoLabel.innerText = genero.name;
 
-}  
+      // Insertamos el checkbox dentro del <label>.
+      // Esto asocia el checkbox con el texto visible, de modo que al hacer clic en el texto, 
+      // también se selecciona el checkbox.
+      generoLabel.appendChild(generoInput);
+
+      // Configuramos el input como un checkbox estableciendo su tipo.
+      generoInput.type = "checkbox";
+
+      // Asignamos un nombre al input, que coincide con el nombre del género actual.
+      // Esto es útil para identificar el checkbox en formularios o en procesos de envío de datos.
+      generoInput.name = genero.name;
+
+      // Asignamos un valor al input, que corresponde al id del género.
+      // Esto permite diferenciar las opciones seleccionadas en función del id único de cada género.
+      generoInput.value = genero.id;
+
+      // Buscamos en el DOM el primer elemento que tiene la clase "column-options".
+      // Se espera que este sea el contenedor donde se añadirán todos los géneros (los <label> que 
+      // los checkboxes).
+      const optionsParent = document.getElementsByClassName("column-options")[0];
+
+      // Añadimos el <label> (que ya contiene el checkbox) al contenedor "optionsParent".
+      // Esto hace que el nuevo género (con su checkbox) aparezca en la interfaz de usuario.
+      optionsParent.appendChild(generoLabel);
+  }
 }
-showGenres(GENEROS)
+
+// Aquí llamamos a la función "showGenres" pasando como argumento el array "GENEROS".
+// Asumimos que "GENEROS" es un array de objetos que contiene los géneros con sus nombres e ids 
+//correspondientes.
+showGenres(GENEROS);
+
 //<input type="checkbox" name="pregunta3" value="opcion1">  Acción
 // tiene que preguntar genero, año de salida, average point, el provider (DONDE VERLO), duracion,
 
