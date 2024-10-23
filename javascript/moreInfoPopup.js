@@ -57,7 +57,7 @@ class MoreInfoPopup {
     const filmInfo = document.createElement("p");
     let genres = this.film.genreIds.map((id) => getGenreById(id));
     genres = genres.join(", ");
-    filmInfo.textContent = `${this.film.release_date} | ${genres}`;
+    filmInfo.textContent = `${this.film.releaseDate} | ${genres}`;
     sinopsis.textContent = this.film.overview;
     favButton.textContent = "Añadir a favoritos";
     playButton.textContent = "Ver trailer";

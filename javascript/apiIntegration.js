@@ -80,18 +80,21 @@ export async function getWatchProvidersByRegion(language, region) {
 }
 export async function getDetailsOfFilmId(id) {
   const params = {
-    append_to_response: "videos,watch/providers",
+    append_to_response: "videos,watch/providers,credits",
     language: "es-ES",
   };
   const data = await fetchData("/3/movie/" + id, params);
-  console.log(data);
   return data;
 }
 export async function getTrailerAndWatchProviders(id) {
   const movieDetails = await getDetailsOfFilmId(id);
+  const director = getDirector(movieDetails);
+  const cast = getCast(movieDetails);
   const trailer = getTrailer(movieDetails);
   const watchProviders = getWatchProviders(movieDetails);
   return {
+    director,
+    cast,
     trailer,
     watchProviders,
   };
@@ -124,9 +127,34 @@ function getWatchProviders(movieDetails) {
   if (allWatchProviders != null) {
     if (allWatchProviders.results.ES && allWatchProviders.results.ES.flatrate) {
       for (const provider of allWatchProviders.results.ES.flatrate) {
-        spanishProviders.push(provider);      
+        spanishProviders.push(provider);
       }
     }
   }
   return spanishProviders;
+}
+function getDirector(movieDetails) {
+  if (movieDetails.credits == null || movieDetails.credits.crew.length <= 0) {
+    return null;
+  }
+  for (const crewMember of movieDetails.credits.crew) {
+    if (crewMember["known_for_department"] === "Directing") {
+      return crewMember.name;
+    }
+  }
+  return "";
+}
+function getCast(movieDetails) {
+  if (movieDetails.credits == null || movieDetails.credits.cast.length <= 0) {
+    return null;
+  }
+  let cast = [];
+  for (let i = 0; i < movieDetails.credits.cast.length; i++) {
+    if (i < 3) {
+      cast .push(movieDetails.credits.cast[i].name)
+    }else{
+      break;
+    }
+  }
+  return cast;
 }

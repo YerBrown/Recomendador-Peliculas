@@ -13,7 +13,7 @@ import {
   getGenres,
   getWatchProvidersByRegion,
 } from "./apiIntegration.js";
-window.mediaLink = "https://www.themoviedb.org/t/p/w1280/";
+window.mediaLink = "https://www.themoviedb.org/t/p/original/";
 const mainParent = document.getElementsByTagName("main")[0];
 let mainMovieCard = null;
 

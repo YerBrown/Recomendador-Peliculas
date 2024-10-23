@@ -12,8 +12,11 @@ class Movie {
     }
     async getDetails(){
         const movieDetails = await getTrailerAndWatchProviders(this.id);
+        this.director = movieDetails.director;
+        this.cast = movieDetails.cast;
         this.trailer = movieDetails.trailer;
         this.watchProviders = movieDetails.watchProviders;
+        console.log(this)
     }
 }
 export default Movie;
