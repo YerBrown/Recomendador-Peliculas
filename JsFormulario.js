@@ -1,4 +1,4 @@
-// Índice inicial del formulario actual
+// Índice inicial del formulario actual 
 let currentIndex = 0;
 
 // Array de objetos que contiene los identificadores de los formularios y sus botones correspondientes
@@ -35,87 +35,28 @@ const formularios = [
   }
 ];
 
-// Array de objetos que manda una id al pulsar el boton submit para que al ser recibida de un 
-//listado de peliculas.
+// Array de objetos que manda una id al pulsar el botón submit para que al ser recibida de un listado de películas.
 const GENEROS = [
-  {
-    id: 28,
-    name: "Acción",
-  },
-  {
-    id: 12,
-    name: "Aventura",
-  },
-  {
-    id: 16,
-    name: "Animación",
-  },
-  {
-    id: 35,
-    name: "Comedia",
-  },
-  {
-    id: 80,
-    name: "Crimen",
-  },
-  {
-    id: 99,
-    name: "Documental",
-  },
-  {
-    id: 18,
-    name: "Drama",
-  },
-  {
-    id: 10751,
-    name: "Familia",
-  },
-  {
-    id: 14,
-    name: "Fantasía",
-  },
-  {
-    id: 36,
-    name: "Historia",
-  },
-  {
-    id: 27,
-    name: "Terror",
-  },
-  {
-    id: 10402,
-    name: "Música",
-  },
-  {
-    id: 9648,
-    name: "Misterio",
-  },
-  {
-    id: 10749,
-    name: "Romance",
-  },
-  {
-    id: 878,
-    name: "Ciencia ficción",
-  },
-  {
-    id: 10770,
-    name: "Película de TV",
-  },
-  {
-    id: 53,
-    name: "Suspense",
-  },
-  {
-    id: 10752,
-    name: "Bélica",
-  },
-  {
-    id: 37,
-    name: "Western",
-  },
+  { id: 28, name: "Acción" },
+  { id: 12, name: "Aventura" },
+  { id: 16, name: "Animación" },
+  { id: 35, name: "Comedia" },
+  { id: 80, name: "Crimen" },
+  { id: 99, name: "Documental" },
+  { id: 18, name: "Drama" },
+  { id: 10751, name: "Familia" },
+  { id: 14, name: "Fantasía" },
+  { id: 36, name: "Historia" },
+  { id: 27, name: "Terror" },
+  { id: 10402, name: "Música" },
+  { id: 9648, name: "Misterio" },
+  { id: 10749, name: "Romance" },
+  { id: 878, name: "Ciencia ficción" },
+  { id: 10770, name: "Película de TV" },
+  { id: 53, name: "Suspense" },
+  { id: 10752, name: "Bélica" },
+  { id: 37, name: "Western" },
 ];
-
 
 // Ocultar todos los fieldsets menos el primero al cargar la página
 formularios.forEach((formulario, index) => {
@@ -125,18 +66,71 @@ formularios.forEach((formulario, index) => {
   }
 });
 
+// Validación de los campos obligatorios
+function validarCampoRequerido(formularioId) {
+  let valido = true;
+
+  if (formularioId === "Fieldset_1") {
+    const respuesta = document.querySelector('input[name="pregunta1"]:checked');
+    if (!respuesta) {
+      document.getElementById('error_1').style.display = 'inline';
+      valido = false;
+    } else {
+      document.getElementById('error_1').style.display = 'none';
+    }
+  } else if (formularioId === "Fieldset_2") {
+    const anio = document.getElementById('anio');
+    if (!anio.value) {
+      document.getElementById('error_2').style.display = 'inline';
+      valido = false;
+    } else {
+      document.getElementById('error_2').style.display = 'none';
+    }
+  } else if (formularioId === "Fieldset_3") {
+    const genero = document.querySelector('input[name="genero"]:checked');
+  if (!genero) {
+    document.getElementById('error_3').style.display = 'inline';
+    valido = false;
+  } else {
+    document.getElementById('error_3').style.display = 'none';
+   }
+  }  
+    else if (formularioId === "Fieldset_4") {
+    const duracionMedia = document.getElementById('duracion-media');
+    if (!duracionMedia.value) {
+      document.getElementById('error_4').style.display = 'inline';
+      valido = false;
+    } else {
+      document.getElementById('error_4').style.display = 'none';
+    }
+  } else if (formularioId === "Fieldset_5") {
+    const provider = document.getElementById('provider');
+    if (!provider.value) {
+      document.getElementById('error_5').style.display = 'inline';
+      valido = false;
+    } else {
+      document.getElementById('error_5').style.display = 'none';
+    }
+  }
+
+  return valido;
+}
+
 // Itera sobre cada formulario dentro del array 'formularios'
 formularios.forEach((formulario, index) => {
   // Obtiene el botón asociado a cada formulario por su ID
   if (formulario.idButton) {
-
-
     const button = document.getElementById(formulario.idButton);
 
     // Asigna un evento de clic al botón
     button.addEventListener("click", (e) => {
       e.preventDefault();
-      if 
+
+      // Verificar si el campo requerido está completado
+      if (!validarCampoRequerido(formulario.id)) {
+        return;  // Si el campo no es válido, no avanzamos al siguiente formulario
+      }
+
       document.getElementById(formularios[currentIndex].id).style.display = 'none';
 
       // Verifica si el índice actual es menor que el total de formularios menos uno
@@ -148,13 +142,11 @@ formularios.forEach((formulario, index) => {
       document.getElementById(formularios[currentIndex].id).style.display = 'block';
     });
   }
-  // Obtiene el botón asociado a cada formulario por su ID
 
-  //_____________________________________________________________________//
+  // Función para los botones "Atrás"
   if (formulario.idBackButton) {
     const backButton = document.getElementById(formulario.idBackButton);
 
-    // Asigna un evento de clic al botón
     backButton.addEventListener("click", (e) => {
       e.preventDefault();
       document.getElementById(formularios[currentIndex].id).style.display = 'none';
@@ -170,56 +162,23 @@ formularios.forEach((formulario, index) => {
   }
 });
 
+// Función para mostrar los géneros
 function showGenres(generos) {
-  // Definimos una función llamada "showGenres" que toma un argumento "generos".
-  // Este argumento es un array que contiene objetos con información sobre géneros (como nombre e id).
+  const optionsParent = document.getElementsByClassName("column-options")[0];
 
-  for (const genero of generos) {
-    // Utilizamos un bucle for...of para iterar sobre cada elemento del array "generos".
-    // En cada iteración, "genero" es un objeto individual del array con propiedades 
-    // como "name" e "id".
-
-    // Creamos un nuevo elemento <label> en el DOM.
+  generos.forEach(genero => {
     const generoLabel = document.createElement("label");
-
-    // Creamos un nuevo elemento <input> en el DOM, que será nuestro checkbox.
     const generoInput = document.createElement("input");
 
-    // Establecemos el texto del label. Este texto se mostrará al lado del checkbox.
     generoLabel.innerText = genero.name;
-
-    // Insertamos el checkbox dentro del <label>.
-    // Esto asocia el checkbox con el texto visible, de modo que al hacer clic en el texto, 
-    // también se selecciona el checkbox.
     generoLabel.appendChild(generoInput);
 
-    // Configuramos el input como un checkbox estableciendo su tipo.
     generoInput.type = "checkbox";
-
-    // Asignamos un nombre al input, que coincide con el nombre del género actual.
-    // Esto es útil para identificar el checkbox en formularios o en procesos de envío de datos.
-    generoInput.name = genero.name;
-
-    // Asignamos un valor al input, que corresponde al id del género.
-    // Esto permite diferenciar las opciones seleccionadas en función del id único de cada género.
+    generoInput.name = "genero";
     generoInput.value = genero.id;
 
-    // Buscamos en el DOM el primer elemento que tiene la clase "column-options".
-    // Se espera que este sea el contenedor donde se añadirán todos los géneros (los <label> que 
-    // los checkboxes).
-    const optionsParent = document.getElementsByClassName("column-options")[0];
-
-    // Añadimos el <label> (que ya contiene el checkbox) al contenedor "optionsParent".
-    // Esto hace que el nuevo género (con su checkbox) aparezca en la interfaz de usuario.
     optionsParent.appendChild(generoLabel);
-  }
+  });
 }
 
-// Aquí llamamos a la función "showGenres" pasando como argumento el array "GENEROS".
-// Asumimos que "GENEROS" es un array de objetos que contiene los géneros con sus nombres e ids 
-//correspondientes.
 showGenres(GENEROS);
-
-//<input type="checkbox" name="pregunta3" value="opcion1">  Acción
-// tiene que preguntar genero, año de salida, average point, el provider (DONDE VERLO), duracion,
-
