@@ -91,13 +91,13 @@ class MainMovieCard {
     this.poster.classList.add("poster");
 
     const reverseCardRight = document.createElement("div");
-    reverseCardRight.id = "reverse-card-right";
+    reverseCardRight.id = "card-right";
     this.reverseMovieTitle = document.createElement("div");
     this.reverseMovieTitle.classList.add("reverse-movie-title");
     this.sinopsis = document.createElement("p");
     this.sinopsis.id = "sinopsis";
     const reverseLinks = document.createElement("div");
-    reverseLinks.id = "reverse-links";
+    reverseLinks.id = "front-links";
     reverseLinks.classList.add("links");
     this.favButton = document.createElement("button");
     this.favButton.classList.add("fav-button");
@@ -209,9 +209,18 @@ class MainMovieCard {
     this.modalOverlay.classList.add("modal-overlay");
     this.modalOverlay.addEventListener("click", (e) => {
       if (e.target === this.modalOverlay) {
-        closeModal();
+        this.closeModal();
       }
     });
+    this.handleEscape = (e) => {
+      if (e.key === "Escape") {
+          this.closeModal();
+          
+          document.removeEventListener("keydown", this.handleEscape);
+          }
+          };
+          document.addEventListener("keydown", this.handleEscape);
+
 
     this.modalContent = document.createElement("div");
     this.modalContent.classList.add("modal-content");
@@ -220,70 +229,27 @@ class MainMovieCard {
     this.closeButton.classList.add("close-button");
     this.closeButton.innerHTML = "×";
     this.closeButton.setAttribute("aria-label", "Cerrar trailer");
-    this.closeButton.addEventListener("click", closeModal());
+    this.closeButton.addEventListener("click",()=> this.closeModal());
 
     this.iframe = document.createElement("iframe");
     this.iframe.id = "trailer-iframe";
     const baseTrailerUrl = "https://www.youtube.com/embed/";
     this.iframe.src = baseTrailerUrl + PELICULAS[this.currentMovieIndex].key;
 
-    this.modalOverlay.appendChild(modalContent);
-    this.modalContent.appendChild(iframe);
-    this.modalContent.appendChild(closeButton);
+    this.modalOverlay.appendChild(this.modalContent);
+    this.modalContent.appendChild(this.iframe);
+    this.modalContent.appendChild(this.closeButton);
 
-    this.parent.appendChild(modalOverlay);
+    this.parent.appendChild(this.modalOverlay);
   }
+  
   closeModal() {
     this.modalOverlay.remove();
   }
 }
 export default MainMovieCard;
-/* const handleEscape = (e) => {
-  if (e.key === "Escape") {
-      closeModal();
-      
-      document.removeEventListener("keydown", handleEscape);
-      }
-      };
-      document.addEventListener("keydown", handleEscape); */
 
-//Funciones de Danel
-/* function getFavorites() {
-  const favorites = localstorage.getItem("favorites") || "[]"
-  return JSON.parse(favorites)
-}
-function saveFavorites(favorites) {
-  const favoritesString = JSON.stringify(favorites);
-  localStorage.setItem("favorites", favoritesString)
-}
 
-function addFavorite(element) {
-  const favorites = getFavorites()
-  favorites.push(element)
-  saveFavorites(favorites)
-}
-function removeFavorite(element) {
-  const favorites = getFavorites()
-  const elementIndex = favorites.findIndex(e => e.id === element.id)
-  if (elementIndex === -1) {
-    return
-  }
-  favorites.splice(elementIndex, 1)
-  saveFavorites(favorites)
-}
-function isFavorite(element) {
-  const favorites = getFavorites()
-  const elementIndex = favorites.findIndex(e => e.id === element.id)
-  if (elementIndex === -1) {
-    return false
-  }
-  return true
-}
-function toggleFavorite(element) {
-  if (isFavorite(element)) {
-    removeFavorite(element)
-  } else {
-    addFavorite(element)
-  }
-} */
-//Aquí acaban las funciones de Danel
+
+
+
