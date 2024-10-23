@@ -1,11 +1,21 @@
-import { GENEROS, WHATCH_PROVIDERS } from "./movie-list.js";
+import { GENEROS, WHATCH_PROVIDERS, updatePreferences } from "./movie-list.js";
+import { openMainPage } from "./codigo.js";
 class PreferencesForm {
-  constructor(genres, watchProviders, parentId) {
+  constructor(parentId, preferences = null) {
     this.parentId = parentId;
     this.parent = document.getElementById(parentId);
-    this.genres = genres;
-    this.watchProviders = watchProviders;
+    this.crearModal();
+    if (preferences != null) {
+      añadirPreferencias(preferences);
+    }
+  }
+  crearModal() {
+    this.modalParent = document.createElement("div");
+    this.modalParent.id = "form-modal";
+
     this.crearFormulario();
+
+    this.parent.appendChild(this.modalParent);
   }
   crearFormulario() {
     this.parentFormulario = document.createElement("form");
@@ -195,17 +205,72 @@ class PreferencesForm {
     this.submitButton.setAttribute("type", "submit");
     this.submitButton.innerText = "Recomendame";
 
-    this.submitButton.addEventListener("submit", (e) => {
-      e.preventDefault();
+    this.submitButton.addEventListener("click", function (event) {
+      event.preventDefault();
 
       const submitValues = {};
-      //1 question
-      
+      // Guardar la informacion seleccionada por el usuario
+      const selectedYearLimit = document.querySelector(
+        'input[name="year"]:checked'
+      );
+      const selectedGenres = document.querySelectorAll(
+        'input[name="genre"]:checked'
+      );
+      const selectedRuntimeLimit = document.querySelector(
+        'input[name="runtime"]:checked'
+      );
+      const selectedProviders = document.querySelectorAll(
+        'input[name="provider"]:checked'
+      );
+      // Asignar los valores al filtro
+      // Comprobar que los elementos requeridos estan completados
+      try {
+        if (selectedYearLimit == null || selectedYearLimit.value == null) {
+          throw new Error("Error: selected year is null");
+        }
+        if (
+          selectedRuntimeLimit == null ||
+          selectedRuntimeLimit.value == null
+        ) {
+          throw new Error("Error: runtime is null");
+        }
+        submitValues["primary_release_date.gte"] = selectedYearLimit.value;
+        submitValues["with_runtime.lte"] = selectedRuntimeLimit.value;
+      } catch (error) {
+        console.error(error.message);
+      }
+      // Añadir los filtros multiples de generos y proveedores de video
+      const genreValues = [];
+      if (selectedGenres != null && selectedGenres.length > 0) {
+        for (const genre of selectedGenres) {
+          genreValues.push(genre.value);
+        }
+      }
+      if (genreValues.length > 0) {
+        submitValues["with_genres"] = genreValues.join("||");
+      }
+
+      const providerValues = [];
+      if (selectedProviders != null && selectedProviders.length > 0) {
+        for (const provider of selectedProviders) {
+          providerValues.push(provider.value);
+        }
+      }
+      console.log(providerValues);
+      if (providerValues.length > 0) {
+        submitValues["with_watch_providers"] = providerValues.join("||");
+      }
+      console.log(submitValues);
+      // Actualizamos las preferencias
+      updatePreferences(submitValues);
+      // Abrimos la pantalla principal
+      openMainPage();
     });
 
     this.parentFormulario.appendChild(this.submitButton);
 
-    this.parent.appendChild(this.parentFormulario);
+    // Añadir todo al modal
+    this.modalParent.appendChild(this.parentFormulario);
   }
   crearGeneroOpciones() {
     const genreOptions = [];
@@ -250,6 +315,53 @@ class PreferencesForm {
       providersOptions.push(providerOption);
     }
     return providersOptions;
+  }
+  añadirPreferencias(preferences) {
+    if (preferences["primary_release_date.gte"] != null) {
+      const selectedYearLimit = document.querySelector(
+        `input[value="${preferences["primary_release_date.gte"]}"]`
+      );
+      if (selectedYearLimit != null) {
+        selectedYearLimit.checked = true;
+      }
+    }
+    if (preferences["with_runtime.lte"] != null) {
+      const selectedRuntimeLimit = document.querySelector(
+        `input[value="${preferences["with_runtime.lte"]}"]`
+      );
+      if (selectedRuntimeLimit != null) {
+        selectedRuntimeLimit.checked = true;
+      }
+    }
+    if (preferences["with_genres"] != null) {
+      const allGenres = preferences["with_genres"].split("||");
+      if (allGenres.length > 0) {
+        for (const genre of allGenres) {
+          const selectedGenreLimit = document.querySelector(
+            `input[value="${genre}"]`
+          );
+          if (selectedGenreLimit != null) {
+            selectedGenreLimit.checked = true;
+          }
+        }
+      }
+    }
+    if (preferences["with_watch_providers"] != null) {
+        const allproviders = preferences["with_watch_providers"].split("||");
+      if (allproviders.length > 0) {
+        for (const provider of allproviders) {
+          const selectedProviderLimit = document.querySelector(
+            `input[value="${provider}"]`
+          );
+          if (selectedProviderLimit != null) {
+            selectedProviderLimit.checked = true;
+          }
+        }
+      }
+    }
+  }
+  eliminarModal() {
+    this.modalParent.remove();
   }
 }
 export default PreferencesForm;

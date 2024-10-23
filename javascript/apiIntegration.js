@@ -140,8 +140,8 @@ function getCast(movieDetails) {
   let cast = [];
   for (let i = 0; i < movieDetails.credits.cast.length; i++) {
     if (i < 3) {
-      cast .push(movieDetails.credits.cast[i].name)
-    }else{
+      cast.push(movieDetails.credits.cast[i].name);
+    } else {
       break;
     }
   }

@@ -325,7 +325,13 @@ button:active {
 }
 
 /* Formulario */
-
+#form-modal {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 11;
+    background-color: #0D0D0D;
+}
 form {
 
     display: flex;

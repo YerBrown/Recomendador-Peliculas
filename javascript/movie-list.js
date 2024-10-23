@@ -149,6 +149,7 @@ export let WHATCH_PROVIDERS = [
     logo_path: "/ozMgkAAoi6aDI5ce8KKA2k8TGvB.jpg",
   },
 ];
+export let PREFERENCES = {};
 export function getFilmById(id) {
   return PELICULAS.find((pelicula) => pelicula.id == id);
 }
@@ -163,4 +164,13 @@ export function getWhatchProviderById(id) {
 export function changeDiscoverMovies(moviesArray) {
   PELICULAS.splice(0, PELICULAS.length - 2);
   PELICULAS = PELICULAS.concat(moviesArray);
+}
+
+export function getLocalStoragePreferences() {
+  return localStorage.getItem("preferences");
+}
+
+export function updatePreferences(preferences) {
+  PREFERENCES = preferences;
+  localStorage.setItem("preferences", PREFERENCES);
 }
