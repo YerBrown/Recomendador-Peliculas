@@ -3,6 +3,7 @@ import Movie from "./movieClass.js";
 import MainMovieCard from "./mainMovieCard.js";
 import FavList from "./favMoviesList.js";
 import { getFavMovies } from "./favMoviesList.js";
+import PreferencesForm from "./form.js";
 import {
   PELICULAS,
   GENEROS,
@@ -46,7 +47,7 @@ function openMyList() {
     return;
   }
 
-  new FavList('parent', getFavMovies())
+  new FavList("parent", getFavMovies());
 
   if (mainParent.classList.contains("align-justify-center")) {
     mainParent.classList.remove("align-justify-center");
@@ -62,6 +63,7 @@ function asignNavLogic() {
   myList.addEventListener("click", () => openMyList());
 }
 
+new PreferencesForm([], [], "parent");
 // asignNavLogic();
 
 // openMainPage();

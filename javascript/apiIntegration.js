@@ -12,11 +12,9 @@ async function fetchData(pathName, params = {}) {
   try {
     const url = new URL(BASE_URL);
     url.pathname = pathName;
-
     for (const key of Object.keys(params)) {
       url.searchParams.append(key, params[key]);
     }
-
     const response = await fetch(url.toString(), OPTIONS);
 
     const data = await response.json();
