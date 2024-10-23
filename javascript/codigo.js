@@ -62,6 +62,6 @@ function asignNavLogic() {
   myList.addEventListener("click", () => openMyList());
 }
 
-asignNavLogic();
+// asignNavLogic();
 
-openMainPage();
+// openMainPage();
