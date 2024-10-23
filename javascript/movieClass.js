@@ -1,4 +1,4 @@
-
+import { getDetailsOfFilmId, getTrailerAndWatchProviders } from "./apiIntegration.js";
 class Movie {
     constructor(id, title, genreIds,releaseDate, overview, posterPath, backdropPath, ){
         this.id= id;
@@ -10,8 +10,10 @@ class Movie {
         this.backdropPath = backdropPath;
         this.getDetails();
     }
-    getDetails(){
-        
+    async getDetails(){
+        const movieDetails = await getTrailerAndWatchProviders(this.id);
+        this.trailer = movieDetails.trailer;
+        this.watchProviders = movieDetails.watchProviders;
     }
 }
 export default Movie;

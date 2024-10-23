@@ -20,7 +20,7 @@ async function fetchData(pathName, params = {}) {
     console.log(url.toString());
 
     const response = await fetch(url.toString(), OPTIONS);
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -53,6 +53,8 @@ export async function getDiscoverMoviesByFilter(newParams = {}) {
     include_adult: false,
     include_video: false,
     language: "es",
+    watch_region: "ES",
+    with_watch_providers: 8,
     page: 1,
     sort_by: "popularity.desc",
   };
@@ -84,4 +86,47 @@ export async function getDetailsOfFilmId(id) {
   const data = await fetchData("/3/movie/" + id, params);
   console.log(data);
   return data;
+}
+export async function getTrailerAndWatchProviders(id) {
+  const movieDetails = await getDetailsOfFilmId(id);
+  const trailer = getTrailer(movieDetails);
+  const watchProviders = getWatchProviders(movieDetails);
+  return {
+    trailer,
+    watchProviders,
+  };
+}
+
+function getTrailer(movieDetails) {
+  if (movieDetails.videos.results.length <= 0) {
+    return null;
+  }
+  let trailer = null;
+  for (const video of movieDetails.videos.results) {
+    if (trailer == null) {
+      trailer = {
+        key: video.key,
+        site: video.site,
+      };
+    }
+    if (trailer.type != "Trailer" && video.type === "Trailer") {
+      trailer = {
+        key: video.key,
+        site: video.site,
+      };
+    }
+  }
+  return trailer;
+}
+function getWatchProviders(movieDetails) {
+  const allWatchProviders = movieDetails["watch/providers"];
+  const spanishProviders = [];
+  if (allWatchProviders != null) {
+    if (allWatchProviders.results.ES && allWatchProviders.results.ES.flatrate) {
+      for (const provider of allWatchProviders.results.ES.flatrate) {
+        spanishProviders.push(provider);      
+      }
+    }
+  }
+  return spanishProviders;
 }

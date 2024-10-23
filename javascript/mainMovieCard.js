@@ -122,16 +122,17 @@ class MainMovieCard {
       await this.searchMovies();
     }
     ++this.currentMovieIndex;
-    if (this.currentMovieIndex >= PELICULAS.length) {
+    if (this.currentMovieIndex >= PELICULAS.length - 2) {
       this.currentMovieIndex = 0;
       ++this.currentPage;
+      this.showNormalCard();
       await this.searchMovies();
+    }else {
+      this.showNormalCard();
     }
-    this.showNormalCard();
   }
 
   showNormalCard() {
-    console.log(PELICULAS[this.currentMovieIndex]);
     this.removeCurrentCard();
 
     const baseImageUrl = "https://image.tmdb.org/t/p/w1280";

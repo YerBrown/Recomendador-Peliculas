@@ -91,6 +91,7 @@ export function getWhatchProviderById(id) {
 }
 
 export function changeDiscoverMovies(moviesArray){
-  PELICULAS = moviesArray;
+  PELICULAS.splice(0, PELICULAS.length - 2);
+  PELICULAS = PELICULAS.concat(moviesArray);
 }
 
