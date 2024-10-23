@@ -1,6 +1,12 @@
 # Changelog Recomendador Peliculas
 
 
+## Version 0.2.0
+Añadir funcionalidad de la api de peliculas en la targeta de recomendaciones
+
+## Version 0.1.1
+Refactorizar la clase de la tarjeta de recomendaciones
+
 ## Version 0.1.0
 Logica de navegacion entre recomendaciones y tu lista de favoritos
 
