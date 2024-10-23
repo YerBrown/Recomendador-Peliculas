@@ -129,7 +129,14 @@ header ul,
 footer ul {
     list-style-type: none;
 }
-
+/* Recomendaciones */
+#recomendations-button-container {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
 /* Mi Lista*/
 #my-favs {
     display: flex;

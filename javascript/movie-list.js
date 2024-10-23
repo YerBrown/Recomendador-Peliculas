@@ -161,16 +161,44 @@ export function getWhatchProviderById(id) {
   return WHATCH_PROVIDERS.find((wProvider) => wProvider.provider_id == id);
 }
 
-export function changeDiscoverMovies(moviesArray) {
-  PELICULAS.splice(0, PELICULAS.length - 2);
+export function changeDiscoverMovies(moviesArray, reset = false) {
+  if (reset) {
+    PELICULAS = [];
+  }
   PELICULAS = PELICULAS.concat(moviesArray);
 }
 
 export function getLocalStoragePreferences() {
-  return localStorage.getItem("preferences");
+  const referenceString = localStorage.getItem("preferences");
+  return JSON.parse(referenceString);
 }
 
 export function updatePreferences(preferences) {
   PREFERENCES = preferences;
-  localStorage.setItem("preferences", PREFERENCES);
+  localStorage.setItem("preferences", JSON.stringify(PREFERENCES));
+}
+export function checkPreferencesValues(obj1, obj2) {
+  // Verifica si son el mismo tipo de valor (null o no objetos)
+  if (obj1 === obj2) return true;
+  
+  // Verifica si ambos son objetos (y no null)
+  if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) {
+      return false;
+  }
+
+  // Verifica si tienen el mismo número de propiedades
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+      return false;
+  }
+
+  // Verifica si todas las propiedades y sus valores son iguales recursivamente
+  for (let key of keys1) {
+      if (!keys2.includes(key) || !checkPreferencesValues(obj1[key], obj2[key])) {
+          return false;
+      }
+  }
+  return true;
 }

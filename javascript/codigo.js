@@ -2,20 +2,19 @@ import MainMovieCard from "./mainMovieCard.js";
 import FavList from "./favMoviesList.js";
 import { getFavMovies } from "./favMoviesList.js";
 import PreferencesForm from "./form.js";
-import {
-  getLocalStoragePreferences,
-  updatePreferences
-} from "./movie-list.js";
+import { getLocalStoragePreferences, updatePreferences } from "./movie-list.js";
 window.mediaLink = "https://www.themoviedb.org/t/p/original/";
 const mainParent = document.getElementsByTagName("main")[0];
 let mainMovieCard = null;
-export async function openMainPage() {
+let currentMovieIndex = 0;
+// Abrir ventana de recomendaciones
+export async function openMainPage(updateFilms = false) {
   //Comprobar si ya se relleno el formulario alguna vez
   const currentPreferences = getLocalStoragePreferences();
   if (currentPreferences != null) {
     updatePreferences(currentPreferences);
   } else {
-    new PreferencesForm("parent");
+    openPreferences();
     return;
   }
 
@@ -29,15 +28,21 @@ export async function openMainPage() {
   }
   mainMovieCard = new MainMovieCard("parent");
 
-  await mainMovieCard.showNextMovie();
+  if (updateFilms) {
+    await mainMovieCard.showNextMovie(true);
+  } else {
+    mainMovieCard.currentMovieIndex = currentMovieIndex - 1;
+    await mainMovieCard.showNextMovie();
+  }
 
   if (!mainParent.classList.contains("align-justify-center")) {
     mainParent.classList.add("align-justify-center");
   }
 }
-
+// Abrir ventana de lista de favoritos
 function openMyList() {
   if (mainMovieCard != null) {
+    currentMovieIndex = mainMovieCard.currentMovieIndex;
     mainMovieCard = null;
     mainParent.innerHTML = "";
   }
@@ -52,7 +57,15 @@ function openMyList() {
     mainParent.classList.remove("align-justify-center");
   }
 }
-
+export function openPreferences(preferences = null) {
+  currentMovieIndex = mainMovieCard.currentMovieIndex;
+  if (mainMovieCard != null) {
+    mainMovieCard = null;
+    mainParent.innerHTML = "";
+  }
+  new PreferencesForm("parent", preferences);
+}
+// Asignar logica en el navegador
 function asignNavLogic() {
   const recommend = document.getElementById("nav-recommend");
   const myList = document.getElementById("nav-my-favs");
@@ -61,6 +74,6 @@ function asignNavLogic() {
   recommend.addEventListener("click", () => openMainPage());
   myList.addEventListener("click", () => openMyList());
 }
-asignNavLogic();
 
+asignNavLogic();
 openMainPage();

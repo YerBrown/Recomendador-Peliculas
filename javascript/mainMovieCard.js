@@ -3,6 +3,7 @@ import {
   PELICULAS,
   getFilmById,
   getGenreById,
+  PREFERENCES,
 } from "./movie-list.js";
 import { getDiscoverMoviesByFilter } from "./apiIntegration.js";
 import {
@@ -12,6 +13,7 @@ import {
   removeMovie,
 } from "./favMoviesList.js";
 import Movie from "./movieClass.js";
+import { openPreferences } from "./codigo.js";
 class MainMovieCard {
   constructor(parentId) {
     this.parentId = parentId;
@@ -30,9 +32,23 @@ class MainMovieCard {
     this.card = document.createElement("div");
     this.card.id = "card";
 
+    this.buttonsContainer = document.createElement("div");
+    this.buttonsContainer.id = "recomendations-button-container";
+
     this.otherMovieButton = document.createElement("button");
-    this.otherMovieButton.classList.add("other-movie-button");
+    this.otherMovieButton.id = "other-movie-button";
     this.otherMovieButton.addEventListener("click", () => this.showNextMovie());
+
+    this.preferencesButtons = document.createElement("button");
+    this.preferencesButtons.id = "preferences-button";
+    this.preferencesButtons.addEventListener("click", () =>
+      openPreferences(PREFERENCES)
+    );
+
+    this.buttonsContainer.append(
+      this.otherMovieButton,
+      this.preferencesButtons
+    );
 
     //NormalCard
     this.normalCardContent = document.createElement("div");
@@ -74,8 +90,7 @@ class MainMovieCard {
     this.infoButton.classList.add("info-button");
     this.infoButton.addEventListener("click", () => this.showReverseCard());
 
-    this.cardContainer.appendChild(this.card);
-    this.cardContainer.appendChild(this.otherMovieButton);
+    this.cardContainer.append(this.card, this.buttonsContainer);
 
     this.normalCardContent.append(this.movieTitle, cardRight);
     cardRight.appendChild(movieData);
@@ -122,22 +137,27 @@ class MainMovieCard {
     reverseLinks.appendChild(this.backButton);
 
     this.otherMovieButton.textContent = "Otra película";
+    this.preferencesButtons.textContent = "Cambiar preferencias";
   }
-  async showNextMovie() {
+  async showNextMovie(reset = false) {
     if (PELICULAS.length <= 0) {
       await this.searchMovies();
     }
     ++this.currentMovieIndex;
-    if (this.currentMovieIndex >= PELICULAS.length - 2) {
+    if (this.currentMovieIndex >= PELICULAS.length - 2 ) {
+      PELICULAS.splice(0, PELICULAS.length - 2);
+
       this.currentMovieIndex = 0;
       ++this.currentPage;
       this.showNormalCard();
       await this.searchMovies();
     } else {
+      if (reset) {
+        await this.searchMovies(reset);
+      }
       this.showNormalCard();
     }
   }
-
   showNormalCard() {
     this.removeCurrentCard();
 
@@ -189,10 +209,17 @@ class MainMovieCard {
   removeCurrentCard() {
     this.card.innerHTML = "";
   }
-  async searchMovies() {
+  async searchMovies(reset = false) {
+    if (reset) {
+      this.currentPage = 1;
+      this.currentMovieIndex = 0;
+    }
+
     const params = {
       page: this.currentPage,
     };
+    // Aplicar las preferencias del usuario
+    Object.assign(params, PREFERENCES);
     const moviesData = await getDiscoverMoviesByFilter(params);
     const discoveredMovies = [];
     for (const movieData of moviesData.results) {
@@ -208,7 +235,7 @@ class MainMovieCard {
       discoveredMovies.push(newMovie);
     }
     console.log(discoveredMovies);
-    changeDiscoverMovies(discoveredMovies);
+    changeDiscoverMovies(discoveredMovies, reset);
   }
   showTrailer() {
     this.modalOverlay = document.createElement("div");

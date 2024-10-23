@@ -28,7 +28,7 @@ export const filtersExample = {
   "primary_release_date.lte": "", // Desde esta fecha hacia abajo (2000-01-01)
   sort_by: "", // Orden del array (popularity.asc/desc, primary_release_date.asc/desc, vote_average.asc/desc)
   "vote_average.gte": "", // Desde esta nota hacia arriba (float)
-  "vote_average.lte": "", // Desde esta nota hacia arriba (float)
+  "vote_average.lte": "", // Desde esta nota hacia abajo (float)
   with_genres: "", // Que contenga los genereos, para filtrar y que contenga todos los genereos seria separandolos con ',' y si quieres sacar los que coincidan con alguno de los generos seria con '||'
   "with_runtime.gte": "", // Desde esta duracion hacia arriba
   "with_runtime.lte": "", // Desde esta duracion hacia abajo

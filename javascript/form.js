@@ -1,4 +1,10 @@
-import { GENEROS, WHATCH_PROVIDERS, updatePreferences } from "./movie-list.js";
+import {
+  GENEROS,
+  WHATCH_PROVIDERS,
+  getLocalStoragePreferences,
+  updatePreferences,
+  checkPreferencesValues,
+} from "./movie-list.js";
 import { openMainPage } from "./codigo.js";
 class PreferencesForm {
   constructor(parentId, preferences = null) {
@@ -6,7 +12,7 @@ class PreferencesForm {
     this.parent = document.getElementById(parentId);
     this.crearModal();
     if (preferences != null) {
-      añadirPreferencias(preferences);
+      this.añadirPreferencias(preferences);
     }
   }
   crearModal() {
@@ -256,15 +262,21 @@ class PreferencesForm {
           providerValues.push(provider.value);
         }
       }
-      console.log(providerValues);
       if (providerValues.length > 0) {
         submitValues["with_watch_providers"] = providerValues.join("||");
       }
       console.log(submitValues);
-      // Actualizamos las preferencias
-      updatePreferences(submitValues);
-      // Abrimos la pantalla principal
-      openMainPage();
+      
+      if (checkPreferencesValues(getLocalStoragePreferences(), submitValues)) {
+        // Abrimos la pzantalla principal
+        openMainPage();
+      } else {
+        // Actualizamos las preferencias
+        updatePreferences(submitValues);
+        openMainPage(true);
+      }
+      const formParent = document.getElementById("form-modal");
+      formParent.remove();
     });
 
     this.parentFormulario.appendChild(this.submitButton);
@@ -347,7 +359,7 @@ class PreferencesForm {
       }
     }
     if (preferences["with_watch_providers"] != null) {
-        const allproviders = preferences["with_watch_providers"].split("||");
+      const allproviders = preferences["with_watch_providers"].split("||");
       if (allproviders.length > 0) {
         for (const provider of allproviders) {
           const selectedProviderLimit = document.querySelector(
@@ -359,9 +371,6 @@ class PreferencesForm {
         }
       }
     }
-  }
-  eliminarModal() {
-    this.modalParent.remove();
   }
 }
 export default PreferencesForm;
