@@ -1,6 +1,8 @@
 import MovieCard from "./favMovieCard.js";
 import Movie from "./movieClass.js";
 import MainMovieCard from "./mainMovieCard.js";
+import FavList from "./favMoviesList.js";
+import { getFavMovies } from "./favMoviesList.js";
 import {
   PELICULAS,
   GENEROS,
@@ -16,26 +18,6 @@ import {
 window.mediaLink = "https://www.themoviedb.org/t/p/original/";
 const mainParent = document.getElementsByTagName("main")[0];
 let mainMovieCard = null;
-
-function renderAllFilms(films) {
-  for (const film of films) {
-    const movieCardNode = new MovieCard(film, "fav-grid").card;
-  }
-}
-function showMyList() {
-  const myList = document.createElement("section");
-  myList.id = "my-favs";
-
-  const title = document.createElement("h1");
-  title.innerText = "Mi Lista:";
-
-  const grid = document.createElement("div");
-  grid.id = "fav-grid";
-
-  myList.append(title, grid);
-  mainParent.appendChild(myList);
-  renderAllFilms(PELICULAS);
-}
 async function openMainPage() {
   const myListHTML = document.getElementById("my-favs");
   if (myListHTML != null && myListHTML != undefined) {
@@ -64,7 +46,7 @@ function openMyList() {
     return;
   }
 
-  showMyList();
+  new FavList('parent', getFavMovies())
 
   if (mainParent.classList.contains("align-justify-center")) {
     mainParent.classList.remove("align-justify-center");

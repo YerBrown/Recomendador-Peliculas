@@ -18,7 +18,6 @@ class FavMovieCard {
     this.parent.appendChild(this.card);
   }
   openMoreInfo(){
-    console.log(this.film.title + ' pulsado');
     const moreInfoPopup = new MoreInfopPopup(this.film, 'my-favs');
   }
 }

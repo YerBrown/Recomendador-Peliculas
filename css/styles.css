@@ -272,7 +272,7 @@ footer ul {
 #left-portrait {
     display: flex;
     justify-content: center;
-    width: 40%;
+    width: 400px;
     height: 100%;
     padding: 50px;
     box-sizing: border-box;

@@ -5,6 +5,12 @@ import {
   getGenreById,
 } from "./movie-list.js";
 import { getDiscoverMoviesByFilter } from "./apiIntegration.js";
+import {
+  getFavMovies,
+  movieIsInList,
+  addNewMovie,
+  removeMovie,
+} from "./favMoviesList.js";
 import Movie from "./movieClass.js";
 class MainMovieCard {
   constructor(parentId) {
@@ -127,7 +133,7 @@ class MainMovieCard {
       ++this.currentPage;
       this.showNormalCard();
       await this.searchMovies();
-    }else {
+    } else {
       this.showNormalCard();
     }
   }
@@ -183,7 +189,6 @@ class MainMovieCard {
   removeCurrentCard() {
     this.card.innerHTML = "";
   }
-
   async searchMovies() {
     const params = {
       page: this.currentPage,
@@ -236,6 +241,12 @@ class MainMovieCard {
   }
   closeModal() {
     this.modalOverlay.remove();
+  }
+  toggleFavorite() {
+    const currentMovieId = PELICULAS[this.currentMovieIndex].id;
+    movieIsInList(currentMovieId)
+      ? removeMovie(currentMovieId)
+      : addNewMovie(PELICULAS[this.currentMovieIndex]);
   }
 }
 export default MainMovieCard;

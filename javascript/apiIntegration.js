@@ -17,8 +17,6 @@ async function fetchData(pathName, params = {}) {
       url.searchParams.append(key, params[key]);
     }
 
-    console.log(url.toString());
-
     const response = await fetch(url.toString(), OPTIONS);
 
     const data = await response.json();
@@ -27,14 +25,6 @@ async function fetchData(pathName, params = {}) {
     console.error(error);
   }
 }
-const filterAtributes = {
-  include_adult: false,
-  include_video: false,
-  language: "es",
-  page: 1,
-  sort_by: "popularity.desc",
-};
-
 export const filtersExample = {
   "primary_release_date.gte": "", // Desde esta fecha hacia arriba (2000-01-01)
   "primary_release_date.lte": "", // Desde esta fecha hacia abajo (2000-01-01)
@@ -47,8 +37,8 @@ export const filtersExample = {
   watch_region: "ES", // Obtener las que se puedan ver en españa o en otras reigiones
   with_watch_providers: "", // Obtener las que se puedan ver en los proveedores de peliculas que les pasemos por su id
 };
-
 export async function getDiscoverMoviesByFilter(newParams = {}) {
+  // Parametros basicos para el endpoint de discover
   const params = {
     include_adult: false,
     include_video: false,
@@ -88,18 +78,19 @@ export async function getDetailsOfFilmId(id) {
 }
 export async function getTrailerAndWatchProviders(id) {
   const movieDetails = await getDetailsOfFilmId(id);
+  const runTime = movieDetails.runtime;
   const director = getDirector(movieDetails);
   const cast = getCast(movieDetails);
   const trailer = getTrailer(movieDetails);
   const watchProviders = getWatchProviders(movieDetails);
   return {
+    runTime,
     director,
     cast,
     trailer,
     watchProviders,
   };
 }
-
 function getTrailer(movieDetails) {
   if (movieDetails.videos.results.length <= 0) {
     return null;
