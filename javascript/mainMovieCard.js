@@ -345,7 +345,7 @@ class MainMovieCard {
       removeMovie(currentMovieId)
 
       this.favNormalButtonIcon.src = "/assets/estrella.png"
-      this.favReverseButtonIcon.src = "/assets/estrella.png" //TODO al volver de la lista de favoritos sale sin marcar
+      this.favReverseButtonIcon.src = "/assets/estrella.png" 
 
       this.favText.innerText = "Añadir a favoritos"
       this.favReverseText.innerText = "Añadir a favoritos"
