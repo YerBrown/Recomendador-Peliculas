@@ -33,6 +33,9 @@ class PreferencesForm {
 
     const yearLegend = document.createElement("legend");
     yearLegend.innerText = "¿Quieres limitar el año de estreno?";
+    const yearOptionsContainer = document.createElement("div");
+    yearOptionsContainer.classList.add("radio-options-parent");
+
     // 1980
     const option1 = document.createElement("div");
     option1.classList.add("radio-option");
@@ -94,14 +97,8 @@ class PreferencesForm {
     this.yearInput5.setAttribute("value", "");
     option5.append(yearLabel5, this.yearInput5);
 
-    this.yearQuestion.append(
-      yearLegend,
-      option1,
-      option2,
-      option3,
-      option4,
-      option5
-    );
+    yearOptionsContainer.append(option1, option2, option3, option4, option5);
+    this.yearQuestion.append(yearLegend, yearOptionsContainer);
 
     // 2 Question
     this.genresQuestion = document.createElement("fieldset");
@@ -110,12 +107,15 @@ class PreferencesForm {
     const genresLegend = document.createElement("legend");
     genresLegend.innerText = "¿Que generos te interesan?";
 
+    const genreOptionsContainer = document.createElement("div");
+    genreOptionsContainer.classList.add("checkbox-options-parent");
+
     const genreOptions = this.crearGeneroOpciones();
 
-    this.genresQuestion.appendChild(genresLegend);
+    this.genresQuestion.append(genresLegend, genreOptionsContainer);
     if (genreOptions != null && genreOptions.length > 0) {
       for (const genre of genreOptions) {
-        this.genresQuestion.appendChild(genre);
+        genreOptionsContainer.appendChild(genre);
       }
     }
 
@@ -125,6 +125,9 @@ class PreferencesForm {
 
     const runtimeLegend = document.createElement("legend");
     runtimeLegend.innerText = "¿Cuanto quieres que dure?";
+
+    const runtimeOptionsContainer = document.createElement("div");
+    runtimeOptionsContainer.classList.add("radio-options-parent");
 
     // Menos de 1h
     const option1h = document.createElement("div");
@@ -175,13 +178,8 @@ class PreferencesForm {
     this.runtimeInput4.setAttribute("value", "");
     option0h.append(runtimeLabel4, this.runtimeInput4);
 
-    this.runtimeQuestion.append(
-      runtimeLegend,
-      option1h,
-      option1h30m,
-      option2h,
-      option0h
-    );
+    runtimeOptionsContainer.append(option1h, option1h30m, option2h, option0h);
+    this.runtimeQuestion.append(runtimeLegend, runtimeOptionsContainer);
     // 4 Question
     this.providersQuestion = document.createElement("fieldset");
     this.providersQuestion.id = "providers-limit";
@@ -190,12 +188,15 @@ class PreferencesForm {
     providersLegend.innerText =
       "¿Quieres que filtremos por plataforma de video?";
 
+    const providersOptionsContainer = document.createElement("div");
+    providersOptionsContainer.classList.add("checkbox-options-parent");
+
     const providerOptions = this.crearWatchProvidersOpciones();
 
-    this.providersQuestion.appendChild(providersLegend);
+    this.providersQuestion.append(providersLegend, providersOptionsContainer);
     if (providerOptions != null && providerOptions.length > 0) {
       for (const provider of providerOptions) {
-        this.providersQuestion.appendChild(provider);
+        providersOptionsContainer.appendChild(provider);
       }
     }
 
@@ -206,11 +207,63 @@ class PreferencesForm {
       this.runtimeQuestion,
       this.providersQuestion
     );
-    // Añadir submit button
-    this.submitButton = document.createElement("button");
-    this.submitButton.setAttribute("type", "submit");
-    this.submitButton.innerText = "Recomendame";
 
+    // Añadir todo al modal
+    this.modalParent.appendChild(this.parentFormulario);
+
+    this.questions = [
+      this.yearQuestion,
+      this.genresQuestion,
+      this.runtimeQuestion,
+      this.providersQuestion,
+    ];
+    for (let i = 0; i < this.questions.length; i++) {
+      const buttonsContainer = document.createElement("div");
+      buttonsContainer.classList.add("preferences-buttons-container");
+      buttonsContainer.id = "question-" + (i + 1) + "-buttons";
+      this.questions[i].appendChild(buttonsContainer);
+      if (i > 0) {
+        const goBackButton = document.createElement("button");
+        goBackButton.classList.add("preferences-back-button");
+        goBackButton.innerText = "Anterior";
+        goBackButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          this.goPrev();
+        });
+        buttonsContainer.appendChild(goBackButton);
+      }
+      if (i < this.questions.length - 1) {
+        const goForwardButton = document.createElement("button");
+        goForwardButton.classList.add("preferences-forward-button");
+        goForwardButton.innerText = "Siguiente";
+        goForwardButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          this.goNext();
+        });
+        buttonsContainer.appendChild(goForwardButton);
+      }
+      if (i == this.questions.length - 1) {
+        // Añadir submit button
+        this.submitButton = document.createElement("button");
+        this.submitButton.setAttribute("type", "submit");
+        this.submitButton.innerText = "Recomendame";
+        buttonsContainer.appendChild(this.submitButton);
+      }
+      const warningAlert = document.createElement("p");
+      warningAlert.classList.add('warning-text');
+      warningAlert.innerText =
+        "Por favor, responde a esta pregunta antes de continuar.";
+      warningAlert.style.visibility = "hidden";
+      if (i == 0) {
+        warningAlert.id = "year-alert-message";
+        buttonsContainer.appendChild(warningAlert);
+      }
+      if (i == 2) {
+        warningAlert.id = "runtime-alert-message";
+        buttonsContainer.appendChild(warningAlert);
+      }
+      warningAlert.id;
+    }
     this.submitButton.addEventListener("click", function (event) {
       event.preventDefault();
 
@@ -266,7 +319,7 @@ class PreferencesForm {
         submitValues["with_watch_providers"] = providerValues.join("||");
       }
       console.log(submitValues);
-      
+
       if (checkPreferencesValues(getLocalStoragePreferences(), submitValues)) {
         // Abrimos la pzantalla principal
         openMainPage();
@@ -278,11 +331,8 @@ class PreferencesForm {
       const formParent = document.getElementById("form-modal");
       formParent.remove();
     });
-
-    this.parentFormulario.appendChild(this.submitButton);
-
-    // Añadir todo al modal
-    this.modalParent.appendChild(this.parentFormulario);
+    this.currentQuestionIndex = 0;
+    this.renderFormulario();
   }
   crearGeneroOpciones() {
     const genreOptions = [];
@@ -327,6 +377,63 @@ class PreferencesForm {
       providersOptions.push(providerOption);
     }
     return providersOptions;
+  }
+  goNext() {
+    const selectedYearLimit = document.querySelector(
+      'input[name="year"]:checked'
+    );
+    const selectedRuntimeLimit = document.querySelector(
+      'input[name="runtime"]:checked'
+    );
+    switch (this.currentQuestionIndex) {
+      case 0:
+        const warningText1 = document.getElementById("year-alert-message");
+        if (selectedYearLimit != null) {
+          ++this.currentQuestionIndex;
+          this.renderFormulario();
+          if (warningText1 != null) {
+            warningText1.style.visibility = "hidden";
+          }
+        } else {
+          if (warningText1 != null) {
+            warningText1.style.visibility = "";
+          }
+        }
+        break;
+      case 2:
+        const warningText2 = document.getElementById("runtime-alert-message");
+        if (selectedRuntimeLimit != null) {
+          ++this.currentQuestionIndex;
+          this.renderFormulario();
+          if (warningText2 != null) {
+            warningText2.style.visibility = "hidden";
+          }
+        } else {
+          if (warningText2 != null) {
+            warningText2.style.visibility = "";
+          }
+        }
+        break;
+      default:
+        ++this.currentQuestionIndex;
+        this.renderFormulario();
+        break;
+    }
+  }
+  goPrev() {
+    if (this.currentQuestionIndex > 0) {
+      --this.currentQuestionIndex;
+      this.renderFormulario();
+    }
+  }
+  renderFormulario() {
+    for (let i = 0; i < this.questions.length; i++) {
+      if (i == this.currentQuestionIndex) {
+        this.questions[i].style = "";
+      } else {
+        this.questions[i].style.display = "none";
+      }
+    }
   }
   añadirPreferencias(preferences) {
     if (preferences["primary_release_date.gte"] != null) {

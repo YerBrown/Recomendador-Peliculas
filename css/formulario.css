@@ -2,13 +2,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
             margin: 0;
             background-color: #f5f5f5;
         }
 
         #questionary {
-            background-color: white;
+
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -48,7 +47,7 @@
             /* Centra el formulario */
         }
 
-               .vertical-options label {
+        .vertical-options label {
             display: block;
             margin-bottom: 5px;
         }

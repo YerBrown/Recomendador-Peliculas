@@ -4,9 +4,11 @@ import { getFavMovies } from "./favMoviesList.js";
 import PreferencesForm from "./form.js";
 import { getLocalStoragePreferences, updatePreferences } from "./movie-list.js";
 window.mediaLink = "https://www.themoviedb.org/t/p/original/";
+
 const mainParent = document.getElementsByTagName("main")[0];
 let mainMovieCard = null;
 let currentMovieIndex = 0;
+
 // Abrir ventana de recomendaciones
 export async function openMainPage(updateFilms = false) {
   //Comprobar si ya se relleno el formulario alguna vez
@@ -58,11 +60,12 @@ function openMyList() {
   }
 }
 export function openPreferences(preferences = null) {
-  currentMovieIndex = mainMovieCard.currentMovieIndex;
   if (mainMovieCard != null) {
+    currentMovieIndex = mainMovieCard.currentMovieIndex;
     mainMovieCard = null;
     mainParent.innerHTML = "";
   }
+  // abrirFormulario();
   new PreferencesForm("parent", preferences);
 }
 // Asignar logica en el navegador

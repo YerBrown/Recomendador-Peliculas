@@ -26,7 +26,6 @@ export function removeMovie(movieId) {
   }
   myList = myList.filter((movie) => movie.id != movieId);
   saveFavMovies(myList);
-  console.log(getFavMovies());
 }
 export function movieIsInList(id) {
   const myList = getFavMovies();
