@@ -21,20 +21,27 @@ class MoreInfoPopup {
     const posterImg = document.createElement("img");
     const contentRight = document.createElement("div");
     const movieTitle = document.createElement("h3");
+    const details = document.createElement("p");
     const sinopsis = document.createElement("p");
+    const people = document.createElement('div');
+    const director = document.createElement('h5');
+    const cast = document.createElement('h5');
     const links = document.createElement("div");
-    const favButton = document.createElement("button");
+    this.favButton = document.createElement("button");
     const playButton = document.createElement("button");
-    const backButton = document.createElement("button");
 
     //Añadir ID, class
-    poster.classList.add("poster");
-    contentRight.id = "reverse-card-right";
-    movieTitle.classList.add("reverse-movie-title");
+    poster.id = "left-portrait";
+    contentRight.id = "card-right";
+    movieTitle.classList.add("movie-title");
+    details.id = 'movie-details';
     sinopsis.id = "sinopsis";
-    links.id = "reverse-links";
+    people.id = 'people'
+    director.id = 'director'
+    cast.id = 'cast';
+    links.id = "links";
     links.classList.add("links");
-    favButton.classList.add("fav-button");
+    this.favButton.classList.add("fav-button");
     playButton.classList.add("play-button");
 
     // Cambiar el fondo en base a la pelicula
@@ -54,15 +61,14 @@ class MoreInfoPopup {
     movieTitle.textContent = `${this.film.title} (${year})`;
 
     // Añadir la informacion sobre la pelicula
-    const filmInfo = document.createElement("p");
     let genres = this.film.genreIds.map((id) => getGenreById(id));
     genres = genres.join(", ");
-    filmInfo.textContent = `${this.film.release_date} | ${genres}`;
+     let runTime = this.film.runTime;
+    details.textContent = `${this.film.releaseDate} | ${genres} | ${runTime}`;
     sinopsis.textContent = this.film.overview;
-    favButton.textContent = "Añadir a favoritos";
+    this.favButton.textContent = "Añadir a favoritos";
     playButton.textContent = "Ver trailer";
-    links.append(favButton, playButton);
-
+    links.append(this.favButton, playButton);
 
     // Añadir el boton de cerrar el popup
     const close = document.createElement("div");
@@ -77,7 +83,7 @@ class MoreInfoPopup {
 
     //Ordenar la estructura
     popupContent.append(poster, contentRight, background, backgroundFilter);
-    contentRight.append(close, movieTitle, filmInfo, sinopsis, links);
+    contentRight.append(close, movieTitle, details, sinopsis, people,links);
     this.popup.appendChild(popupContent);
     this.parent.appendChild(this.popup);
   }
