@@ -1,16 +1,13 @@
 # Recomendador-Peliculas
 
 ## Resumen
-Al abrir la pagina, se necesita rellenar un formulario para saber los gustos del usuario.
-Pagina web que te recomienda peliculas en base a unos filtros.
-Poder añadir a una lista de favoritos las peliculas recomendadas.
-Mostrar la portada, titulo, sinopsis, genero, año.
+Hemos creado una página web para recomendar películas en función de los gustos del usuario
 
-## Extra 
-Mostrar trailer
+## Funcionamiento
+Al cargar la página rellenaremos un formulario con nuestras preferencias. En base a los resultados obtenidos mostraremos una película que encaje con los requisitos.
+En la tarjeta mostrada tendremos información básica de la película. Podremos añadirla a favoritos, solicitar más información y ver el trailer de la película, así como información de dónde verla en plataformas de streaming. 
+En caso de querer otra película podemos hacerlo, manteniendo los parámetros iniciales. También podremos volver a rellenar el formulario si queremos cambiar los parámetros de búsqueda. 
 
-Con la lista de favoritos, hacer un juego para elegir una pelicula entre las seleccionadas.
+Tenemos una sección de favoritos donde se almacenarán las películas previamente añadidas. Esta página se almacenará en Local Storage. 
 
-Para recomendar peliculas, en vez de hacer un formulario con la info preestablecida, damos de ejemplo 10 peliculas y en base a si le parece atractiva la descarte o se añada a favoritos, para despues con la informacion conseguida, recomendat las peliculas que tengas similitudes o del mismo genero a las escogidas. (Como tinder)
 
-Añadir informacion de donde se puede ver.
