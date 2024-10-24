@@ -86,21 +86,25 @@
 
 
 .movie-title {
-    width: 50%;
+    width: 40%;
     text-align: center;
     font-size: 4em;
     font-weight: bold;
-    align-content: flex-start;
+    padding-left: 20px;    
     color: white;
     padding-top: 50px;
+    padding-right: 20px;
+    box-sizing: border-box;
 }
+
 
 #card-right {
     display: flex;
-    width: 50%;
+    width: 60%;
     flex-direction: column;
     justify-content: space-between;
     align-content: center;
+    padding: 30px 50px;
 }
 
 #movie-data {
@@ -132,6 +136,13 @@
     padding: 20px;
 }
 
+.provider-icon{
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+}
+
+
 .links {
     display: flex;
     justify-content: space-between;
@@ -139,7 +150,6 @@
     color: white;
     height: 45%;
 }
-
 
 
 #front-links {
@@ -177,15 +187,20 @@
     height: 100%;
 }
 
-#reverse-card-right {
+.poster {
+    width: 40%;
+    height: 100%;
     display: flex;
-    width: 65%;
-    flex-direction: column;
-    justify-content: space-between;
-    align-content: center;
-    padding: 40px 50px;
+    padding: 20px 20px;
     box-sizing: border-box;
 }
+
+.poster .img {
+    height: 100%;
+    aspect-ratio: 10/16;
+    border-radius: 8px;
+}
+
 
 .reverse-movie-title {
     font-size: 2em;
@@ -198,10 +213,5 @@
     color: white;
 }
 
-#reverse-links {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0px;
-    align-items: end;
 
-}
+

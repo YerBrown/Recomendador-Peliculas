@@ -26,8 +26,11 @@ class MainMovieCard {
   createMainCard() {
     this.cardContainer = document.createElement("section");
     this.cardContainer.id = "card-container";
+    this.cardFilter = document.createElement("div");
+    this.cardFilter.id = "popup-background-filter";
 
     this.parent.appendChild(this.cardContainer);
+    
 
     this.card = document.createElement("div");
     this.card.id = "card";
@@ -75,7 +78,7 @@ class MainMovieCard {
 
     const watchNow = document.createElement("h3");
     watchNow.id = "watch-now";
-    watchNow.innerText = "VER AHORA";
+    watchNow.innerText = "DÓNDE VER";
 
     this.streamingPlatforms = document.createElement("div");
     this.streamingPlatforms.id = "streaming-platforms";
@@ -83,6 +86,8 @@ class MainMovieCard {
     const frontLinks = document.createElement("div");
     frontLinks.id = "front-links";
     frontLinks.classList.add("links");
+    this.favNormalButtonIcon = document.createElement("img");
+    this.favNormalButtonIcon.classList.add("fav-icon");
     this.favNormalButton = document.createElement("button");
     this.favNormalButton.classList.add("fav-button");
     this.favNormalButton.addEventListener("click", () => this.toggleFavorite());
@@ -90,9 +95,14 @@ class MainMovieCard {
     this.infoButton.classList.add("info-button");
     this.infoButton.addEventListener("click", () => this.showReverseCard());
 
-    this.cardContainer.append(this.card, this.buttonsContainer);
+    this.favNormalButton.innerHTML = ""
+    this.favText = document.createElement("p")
+    this.favNormalButton.append(this.favNormalButtonIcon, this.favText);
 
-    this.normalCardContent.append(this.movieTitle, cardRight);
+    this.cardContainer.append(this.card, this.buttonsContainer);
+    
+
+    this.normalCardContent.append(this.cardFilter,this.movieTitle, cardRight);
     cardRight.appendChild(movieData);
     movieData.appendChild(movieDataList);
     movieDataList.appendChild(this.movieDataYear);
@@ -104,6 +114,8 @@ class MainMovieCard {
     frontLinks.appendChild(this.favNormalButton);
     frontLinks.appendChild(this.infoButton);
 
+
+
     //Reverse card
     this.reverseCardContent = document.createElement("div");
     this.reverseCardContent.id = "reverse-card";
@@ -112,17 +124,24 @@ class MainMovieCard {
     this.poster.classList.add("poster");
 
     const reverseCardRight = document.createElement("div");
-    reverseCardRight.id = "reverse-card-right";
+    reverseCardRight.id = "card-right";
     this.reverseMovieTitle = document.createElement("div");
     this.reverseMovieTitle.classList.add("reverse-movie-title");
     this.sinopsis = document.createElement("p");
     this.sinopsis.id = "sinopsis";
     const reverseLinks = document.createElement("div");
-    reverseLinks.id = "reverse-links";
+    reverseLinks.id = "front-links";
     reverseLinks.classList.add("links");
-    this.favButton = document.createElement("button");
-    this.favButton.classList.add("fav-button");
-    this.favButton.addEventListener("click", () => this.toggleFavorite()); //TODO falta hacer la función
+
+    this.favReverseButton = document.createElement('button')
+    this.favReverseButton.classList.add("fav-button");
+    this.favReverseButton.innerHTML = ""
+    this.favReverseButtonIcon = document.createElement("img");
+    this.favReverseButtonIcon.classList.add("fav-icon");
+    this.favReverseText = document.createElement("p")
+    this.favReverseButton.append(this.favReverseButtonIcon, this.favReverseText);
+    this.favReverseButton.addEventListener("click", () => this.toggleFavorite());
+
     this.playButton = document.createElement("button");
     this.playButton.classList.add("play-button");
     this.playButton.addEventListener("click", () => this.showTrailer());
@@ -133,7 +152,7 @@ class MainMovieCard {
     this.reverseCardContent.append(this.poster, reverseCardRight);
     reverseCardRight.appendChild(this.reverseMovieTitle);
     reverseCardRight.append(this.sinopsis, reverseLinks);
-    reverseLinks.append(this.favButton, this.playButton);
+    reverseLinks.append(this.favReverseButton, this.playButton);
     reverseLinks.appendChild(this.backButton);
 
     this.otherMovieButton.textContent = "Otra película";
@@ -144,7 +163,7 @@ class MainMovieCard {
       await this.searchMovies();
     }
     ++this.currentMovieIndex;
-    if (this.currentMovieIndex >= PELICULAS.length - 2 ) {
+    if (this.currentMovieIndex >= PELICULAS.length - 2) {
       PELICULAS.splice(0, PELICULAS.length - 2);
 
       this.currentMovieIndex = 0;
@@ -161,47 +180,83 @@ class MainMovieCard {
   showNormalCard() {
     this.removeCurrentCard();
 
-    const baseImageUrl = "https://image.tmdb.org/t/p/w1280";
-    this.card.style.backgroundImage = `url(${
-      baseImageUrl + PELICULAS[this.currentMovieIndex].backdropPath
-    })`;
+    const baseImageUrl = "https://image.tmdb.org/t/p/original";
+    this.card.style.backgroundImage = `url(${baseImageUrl + PELICULAS[this.currentMovieIndex].backdropPath
+      })`;
 
     this.movieTitle.textContent = PELICULAS[this.currentMovieIndex].title;
 
+    this.movieDataDirector.innerText = "Director: " + PELICULAS[this.currentMovieIndex].director;
+
     this.movieDataYear.innerText =
       "Año: " + PELICULAS[this.currentMovieIndex].releaseDate.split("-")[0];
-    this.movieDataGenre.innerText = "Género: Prueba";
+
     this.movieDataGenre.innerText =
-      "Género: " +
-      PELICULAS[this.currentMovieIndex].genreIds
-        .map((id) => getGenreById(id))
-        .join(", ");
-    this.movieDataDirector.innerText = "Director: Prueba "; //TODO: Falta sacar info de API
+      "Género: " + PELICULAS[this.currentMovieIndex].genreIds.map((id) => getGenreById(id)).join(", ");
 
-    this.streamingPlatforms.innerText = "PRUEBA STREAMING"; //TODO. falta sacar info de API
 
-    this.favNormalButton.textContent = "Añadir a favoritos";
+    this.streamingPlatforms.innerHTML = ""
+
+    if (PELICULAS[this.currentMovieIndex].watchProviders != "null") {
+
+
+      for (const provider of PELICULAS[this.currentMovieIndex].watchProviders) {
+        const newProvider = document.createElement("img")
+        newProvider.classList.add("provider-icon")
+        newProvider.setAttribute("src", baseImageUrl + provider.logo_path)
+        this.streamingPlatforms.appendChild(newProvider)
+      }
+    }
+
+    const currentMovieId = PELICULAS[this.currentMovieIndex].id;
+    if (movieIsInList(currentMovieId)) {
+
+      this.favNormalButtonIcon.src = "/assets/estrella-activa.png"
+      this.favText.innerText = "Quitar de favoritos"
+
+
+    } else {
+
+      this.favNormalButtonIcon.src = "/assets/estrella.png"
+      this.favText.innerText = "Añadir a favoritos"
+
+    }
+
     this.infoButton.textContent = "Más info";
 
     this.card.appendChild(this.normalCardContent);
+    this.card.appendChild(this.cardFilter);
   }
   showReverseCard() {
     this.removeCurrentCard();
-    const baseImageUrl = "https://image.tmdb.org/t/p/w1280";
-    this.card.style.backgroundImage = `url(${
-      baseImageUrl + PELICULAS[this.currentMovieIndex].backdropPath
-    })`;
+    const baseImageUrl = "https://image.tmdb.org/t/p/original";
+    this.card.style.backgroundImage = `url(${baseImageUrl + PELICULAS[this.currentMovieIndex].backdropPath
+      })`;
     this.poster.src =
       baseImageUrl + PELICULAS[this.currentMovieIndex].posterPath;
 
     const year = PELICULAS[this.currentMovieIndex].releaseDate.split("-")[0];
-    this.reverseMovieTitle.textContent = `${
-      PELICULAS[this.currentMovieIndex].title
-    } (${year})`;
+    this.reverseMovieTitle.textContent = `${PELICULAS[this.currentMovieIndex].title
+      } (${year})`;
 
     this.sinopsis.textContent = PELICULAS[this.currentMovieIndex].overview;
-    this.favButton.textContent = "Añadir a favoritos";
+
+    const currentMovieId = PELICULAS[this.currentMovieIndex].id;
+    if (movieIsInList(currentMovieId)) {
+
+      this.favReverseButtonIcon.src = "/assets/estrella-activa.png"
+      this.favReverseText.innerText = "Quitar de favoritos"
+
+
+    } else {
+      this.favReverseButtonIcon.src = "/assets/estrella.png"
+      this.favReverseText.innerText = "Añadir a favoritos"
+
+    }
     this.playButton.textContent = "Ver trailer";
+    if (PELICULAS[this.currentMovieIndex].trailer.key == "null") {
+      this.playButton.textContent = "Trailer no disponible"
+    }
     this.backButton.textContent = "Volver";
 
     this.card.appendChild(this.reverseCardContent);
@@ -232,19 +287,32 @@ class MainMovieCard {
         movieData["poster_path"],
         movieData["backdrop_path"]
       );
+      await newMovie.getDetails();
       discoveredMovies.push(newMovie);
     }
     console.log(discoveredMovies);
     changeDiscoverMovies(discoveredMovies, reset);
   }
-  showTrailer() {
+   showTrailer() {
+    if (PELICULAS[this.currentMovieIndex].trailer.key == "null") {
+      return
+    }
     this.modalOverlay = document.createElement("div");
     this.modalOverlay.classList.add("modal-overlay");
     this.modalOverlay.addEventListener("click", (e) => {
       if (e.target === this.modalOverlay) {
-        closeModal();
+        this.closeModal();
       }
     });
+    this.handleEscape = (e) => {
+      if (e.key === "Escape") {
+        this.closeModal();
+
+        document.removeEventListener("keydown", this.handleEscape);
+      }
+    };
+    document.addEventListener("keydown", this.handleEscape);
+
 
     this.modalContent = document.createElement("div");
     this.modalContent.classList.add("modal-content");
@@ -253,76 +321,49 @@ class MainMovieCard {
     this.closeButton.classList.add("close-button");
     this.closeButton.innerHTML = "×";
     this.closeButton.setAttribute("aria-label", "Cerrar trailer");
-    this.closeButton.addEventListener("click", closeModal());
+    this.closeButton.addEventListener("click", () => this.closeModal());
 
     this.iframe = document.createElement("iframe");
     this.iframe.id = "trailer-iframe";
     const baseTrailerUrl = "https://www.youtube.com/embed/";
-    this.iframe.src = baseTrailerUrl + PELICULAS[this.currentMovieIndex].key;
+    this.iframe.src = baseTrailerUrl + PELICULAS[this.currentMovieIndex].trailer.key;
 
-    this.modalOverlay.appendChild(modalContent);
-    this.modalContent.appendChild(iframe);
-    this.modalContent.appendChild(closeButton);
+    this.modalOverlay.appendChild(this.modalContent);
+    this.modalContent.appendChild(this.iframe);
+    this.modalContent.appendChild(this.closeButton);
 
-    this.parent.appendChild(modalOverlay);
+    this.parent.appendChild(this.modalOverlay);
   }
+
   closeModal() {
     this.modalOverlay.remove();
   }
   toggleFavorite() {
     const currentMovieId = PELICULAS[this.currentMovieIndex].id;
-    movieIsInList(currentMovieId)
-      ? removeMovie(currentMovieId)
-      : addNewMovie(PELICULAS[this.currentMovieIndex]);
+    if (movieIsInList(currentMovieId)) {
+
+      removeMovie(currentMovieId)
+
+      this.favNormalButtonIcon.src = "/assets/estrella.png"
+      this.favReverseButtonIcon.src = "/assets/estrella.png" 
+
+      this.favText.innerText = "Añadir a favoritos"
+      this.favReverseText.innerText = "Añadir a favoritos"
+
+    } else {
+      addNewMovie(PELICULAS[this.currentMovieIndex]);
+      this.favNormalButtonIcon.src = "/assets/estrella-activa.png"
+      this.favReverseButtonIcon.src = "/assets/estrella-activa.png"
+
+      this.favText.innerText = "Quitar de favoritos"
+      this.favReverseText.innerText = "Quitar de favoritos"
+    }
   }
 }
 export default MainMovieCard;
-/* const handleEscape = (e) => {
-  if (e.key === "Escape") {
-      closeModal();
-      
-      document.removeEventListener("keydown", handleEscape);
-      }
-      };
-      document.addEventListener("keydown", handleEscape); */
 
-//Funciones de Danel
-/* function getFavorites() {
-  const favorites = localstorage.getItem("favorites") || "[]"
-  return JSON.parse(favorites)
-}
-function saveFavorites(favorites) {
-  const favoritesString = JSON.stringify(favorites);
-  localStorage.setItem("favorites", favoritesString)
-}
 
-function addFavorite(element) {
-  const favorites = getFavorites()
-  favorites.push(element)
-  saveFavorites(favorites)
-}
-function removeFavorite(element) {
-  const favorites = getFavorites()
-  const elementIndex = favorites.findIndex(e => e.id === element.id)
-  if (elementIndex === -1) {
-    return
-  }
-  favorites.splice(elementIndex, 1)
-  saveFavorites(favorites)
-}
-function isFavorite(element) {
-  const favorites = getFavorites()
-  const elementIndex = favorites.findIndex(e => e.id === element.id)
-  if (elementIndex === -1) {
-    return false
-  }
-  return true
-}
-function toggleFavorite(element) {
-  if (isFavorite(element)) {
-    removeFavorite(element)
-  } else {
-    addFavorite(element)
-  }
-} */
-//Aquí acaban las funciones de Danel
+
+
+
+
