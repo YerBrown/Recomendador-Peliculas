@@ -23,22 +23,22 @@ class MoreInfoPopup {
     const movieTitle = document.createElement("h3");
     const details = document.createElement("p");
     const sinopsis = document.createElement("p");
-    const people = document.createElement('div');
-    const director = document.createElement('h5');
-    const cast = document.createElement('h5');
+    const people = document.createElement("div");
+    const director = document.createElement("h5");
+    const cast = document.createElement("h5");
     const links = document.createElement("div");
     this.favButton = document.createElement("button");
     const playButton = document.createElement("button");
 
     //Añadir ID, class
     poster.id = "left-portrait";
-    contentRight.id = "card-right";
-    movieTitle.classList.add("movie-title");
-    details.id = 'movie-details';
+    contentRight.id = "right-info";
+    movieTitle.classList.add("moreInfo-movie-title");
+    details.id = "movie-details";
     sinopsis.id = "sinopsis";
-    people.id = 'people'
-    director.id = 'director'
-    cast.id = 'cast';
+    people.id = "people";
+    director.id = "director";
+    cast.id = "cast";
     links.id = "links";
     links.classList.add("links");
     this.favButton.classList.add("fav-button");
@@ -63,9 +63,29 @@ class MoreInfoPopup {
     // Añadir la informacion sobre la pelicula
     let genres = this.film.genreIds.map((id) => getGenreById(id));
     genres = genres.join(", ");
-     let runTime = this.film.runTime;
-    details.textContent = `${this.film.releaseDate} | ${genres} | ${runTime}`;
+    let runTime = this.film.runTime;
+    const horas = Math.floor(runTime / 60); // Calcula cuántas horas hay
+    const minutosRestantes = runTime % 60;
+    this.runtimeString = "";
+    if (horas > 0) {
+      this.runtimeString += horas + "h ";
+    }
+    if (minutosRestantes > 0) {
+      this.runtimeString += minutosRestantes + "m ";
+    }
+    details.textContent = `${this.film.releaseDate} | ${genres} | ${this.runtimeString}`;
     sinopsis.textContent = this.film.overview;
+    let peopleString = "";
+    if (this.film.director != null && this.film.director != "") {
+      peopleString += "Director: " + this.film.director + "\n";
+    }
+    if (this.film.cast != null && this.film.cast.length > 0) {
+      peopleString += "Actores: ";
+      for (const actor of this.film.cast) {
+        peopleString += actor + " ";
+      }
+    }
+    people.innerText = peopleString;
     this.favButton.textContent = "Añadir a favoritos";
     playButton.textContent = "Ver trailer";
     links.append(this.favButton, playButton);
@@ -83,7 +103,7 @@ class MoreInfoPopup {
 
     //Ordenar la estructura
     popupContent.append(poster, contentRight, background, backgroundFilter);
-    contentRight.append(close, movieTitle, details, sinopsis, people,links);
+    contentRight.append(close, movieTitle, details, sinopsis, people, links);
     this.popup.appendChild(popupContent);
     this.parent.appendChild(this.popup);
   }

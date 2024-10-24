@@ -10,18 +10,20 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-} 
+}
 
 .modal-content {
     position: relative;
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 70%;
 }
+
 #trailer-iframe {
     width: 100%;
     height: 100%;
     border: none;
-}   
+    border-radius: 10px;
+}
 
 .close-button {
     position: absolute;
@@ -61,12 +63,12 @@
 
 }
 
-#card{
-
+#card {
+    position: re;
     display: flex;
     flex-direction: row;
-    width: 60%;
-    height: 50%;
+    width: 90%;
+    height: 75%;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
@@ -76,7 +78,17 @@
     text-shadow: 5px 5px 10px black;
 }
 
-#normal-card {
+#card-filter{
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.362);
+    background-size: cover;
+    background-position: center;
+}
+#normal-card,
+#reverse-card {
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
@@ -86,25 +98,24 @@
 
 
 .movie-title {
-    width: 40%;
     text-align: center;
-    font-size: 4em;
+    font-size: clamp(20px, 5vw, 50px);
     font-weight: bold;
-    padding-left: 20px;    
     color: white;
-    padding-top: 50px;
-    padding-right: 20px;
+    padding: 50px 40px;
     box-sizing: border-box;
+    width: 40%;
 }
 
 
 #card-right {
     display: flex;
-    width: 60%;
+    box-sizing: border-box;
     flex-direction: column;
     justify-content: space-between;
     align-content: center;
-    padding: 30px 50px;
+    padding: 20px;
+    width: 70%;
 }
 
 #movie-data {
@@ -113,33 +124,40 @@
     color: white;
     justify-content: flex-start;
     align-content: center;
-    padding-top: 20px;
 }
 
 #movie-data-list {
-    margin: 20px;
+    display: flex;
+    flex-direction: column;
     list-style: none;
-    
+    gap: 10px;
 }
 
 #movie-data-list li {
-    padding: 20px;
-    list-style: none;
-    text-align: center;   
-}
-#watch-now{
-    color:white;
-}
-#streaming-platforms{
-    border: dotted white 1px;
-    color: white;
-    padding: 20px;
+
+    text-align: center;
 }
 
-.provider-icon{
+#watch-now {
+    color: white;
+}
+
+#streaming-platforms {
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: row;
+    border: dotted white 1px;
+    color: white;
+    padding: 10px;
+    gap: 10px;
+}
+
+.provider-icon {
     width: 60px;
     height: 60px;
-    padding: 5px;
+    border-radius: 10px;
 }
 
 
@@ -148,17 +166,14 @@
     justify-content: space-between;
     align-items: center;
     color: white;
-    height: 45%;
 }
 
 
 #front-links {
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 0px;
+    justify-content: right;
     align-items: end;
-    padding: 10px;
-
+    gap: 20px;
 }
 
 
@@ -179,28 +194,19 @@
 
 /*Estilo reverso*/
 
-#reverse-card {
+
+.poster-container {
     display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    width: 100%;
+    justify-content: center;
     height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .poster {
-    width: 40%;
-    height: 100%;
-    display: flex;
-    padding: 20px 20px;
-    box-sizing: border-box;
-}
-
-.poster .img {
-    height: 100%;
     aspect-ratio: 10/16;
-    border-radius: 8px;
+    border-radius: 10px;
 }
-
 
 .reverse-movie-title {
     font-size: 2em;
@@ -213,5 +219,12 @@
     color: white;
 }
 
+.fav-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
+.button-checked {
 
+}

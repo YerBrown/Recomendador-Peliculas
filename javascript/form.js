@@ -18,6 +18,16 @@ class PreferencesForm {
   crearModal() {
     this.modalParent = document.createElement("div");
     this.modalParent.id = "form-modal";
+    this.logo = document.createElement("img");
+    this.logo.id = "form-logo-icon";
+    this.logo.src = "/multimedia/tira-de-pelicula.png";
+    this.logoName = document.createElement("h2");
+    this.logoName.innerText = "What To Watch";
+
+    this.tip = document.createElement("h3");
+    this.tip.innerText =
+      "¡Ayúdanos a recomendarte las mejores películas! \nQueremos asegurarnos de ofrecerte recomendaciones que realmente se ajusten a tus gustos. Para lograrlo, es importante que respondas las siguientes preguntas con la mayor sinceridad posible.";
+    this.modalParent.append(this.logo, this.logoName, this.tip);
 
     this.crearFormulario();
 
@@ -250,7 +260,7 @@ class PreferencesForm {
         buttonsContainer.appendChild(this.submitButton);
       }
       const warningAlert = document.createElement("p");
-      warningAlert.classList.add('warning-text');
+      warningAlert.classList.add("warning-text");
       warningAlert.innerText =
         "Por favor, responde a esta pregunta antes de continuar.";
       warningAlert.style.visibility = "hidden";

@@ -35,6 +35,10 @@ class MainMovieCard {
     this.card = document.createElement("div");
     this.card.id = "card";
 
+    const backgroundFilter = document.createElement("div");
+    backgroundFilter.id = "card-filter";
+    this.card.appendChild(backgroundFilter);
+
     this.buttonsContainer = document.createElement("div");
     this.buttonsContainer.id = "recomendations-button-container";
 
@@ -120,8 +124,12 @@ class MainMovieCard {
     this.reverseCardContent = document.createElement("div");
     this.reverseCardContent.id = "reverse-card";
 
+    this.posterContainer =  document.createElement("div");
+    this.posterContainer.classList.add('poster-container')
+
     this.poster = document.createElement("img");
     this.poster.classList.add("poster");
+    this.posterContainer.appendChild(this.poster);
 
     const reverseCardRight = document.createElement("div");
     reverseCardRight.id = "card-right";
@@ -149,7 +157,7 @@ class MainMovieCard {
     this.backButton.classList.add("back-button");
     this.backButton.addEventListener("click", () => this.showNormalCard());
 
-    this.reverseCardContent.append(this.poster, reverseCardRight);
+    this.reverseCardContent.append(this.posterContainer, reverseCardRight);
     reverseCardRight.appendChild(this.reverseMovieTitle);
     reverseCardRight.append(this.sinopsis, reverseLinks);
     reverseLinks.append(this.favReverseButton, this.playButton);
@@ -254,7 +262,7 @@ class MainMovieCard {
 
     }
     this.playButton.textContent = "Ver trailer";
-    if (PELICULAS[this.currentMovieIndex].trailer.key == "null") {
+    if (PELICULAS[this.currentMovieIndex].trailer == null) {
       this.playButton.textContent = "Trailer no disponible"
     }
     this.backButton.textContent = "Volver";
@@ -294,7 +302,7 @@ class MainMovieCard {
     changeDiscoverMovies(discoveredMovies, reset);
   }
    showTrailer() {
-    if (PELICULAS[this.currentMovieIndex].trailer.key == "null") {
+    if (PELICULAS[this.currentMovieIndex].trailer == null) {
       return
     }
     this.modalOverlay = document.createElement("div");
@@ -334,7 +342,47 @@ class MainMovieCard {
 
     this.parent.appendChild(this.modalOverlay);
   }
+  showMoreInfoTrailer(movie){
+    if (movie.trailer == null) {
+      return
+    }
+    this.modalOverlay = document.createElement("div");
+    this.modalOverlay.classList.add("modal-overlay");
+    this.modalOverlay.addEventListener("click", (e) => {
+      if (e.target === this.modalOverlay) {
+        this.closeModal();
+      }
+    });
+    this.handleEscape = (e) => {
+      if (e.key === "Escape") {
+        this.closeModal();
 
+        document.removeEventListener("keydown", this.handleEscape);
+      }
+    };
+    document.addEventListener("keydown", this.handleEscape);
+
+
+    this.modalContent = document.createElement("div");
+    this.modalContent.classList.add("modal-content");
+
+    this.closeButton = document.createElement("button");
+    this.closeButton.classList.add("close-button");
+    this.closeButton.innerHTML = "×";
+    this.closeButton.setAttribute("aria-label", "Cerrar trailer");
+    this.closeButton.addEventListener("click", () => this.closeModal());
+
+    this.iframe = document.createElement("iframe");
+    this.iframe.id = "trailer-iframe";
+    const baseTrailerUrl = "https://www.youtube.com/embed/";
+    this.iframe.src = baseTrailerUrl + movie.trailer.key;
+
+    this.modalOverlay.appendChild(this.modalContent);
+    this.modalContent.appendChild(this.iframe);
+    this.modalContent.appendChild(this.closeButton);
+
+    this.parent.appendChild(this.modalOverlay);
+  }
   closeModal() {
     this.modalOverlay.remove();
   }
