@@ -235,7 +235,7 @@ class MainMovieCard {
     this.iframe = document.createElement("iframe");
     this.iframe.id = "trailer-iframe";
     const baseTrailerUrl = "https://www.youtube.com/embed/";
-    this.iframe.src = baseTrailerUrl + PELICULAS[this.currentMovieIndex].key;
+    this.iframe.src = baseTrailerUrl + PELICULAS[this.currentMovieIndex].trailer.key; //SI trailer null, alerta. No funciona desde la carta fav
 
     this.modalOverlay.appendChild(this.modalContent);
     this.modalContent.appendChild(this.iframe);

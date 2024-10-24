@@ -1,4 +1,4 @@
-import { apiKey, accesToken } from "./apikey.js";
+import { apiKey, accesToken } from "./apiKey.js";
 const OPTIONS = {
   method: "GET",
   headers: {
