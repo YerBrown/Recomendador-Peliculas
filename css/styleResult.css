@@ -78,7 +78,7 @@
     text-shadow: 5px 5px 10px black;
 }
 
-#card-filter{
+#card-filter {
     position: absolute;
     z-index: 0;
     width: 100%;
@@ -87,6 +87,7 @@
     background-size: cover;
     background-position: center;
 }
+
 #normal-card,
 #reverse-card {
     display: flex;
@@ -226,6 +227,6 @@
     align-items: center;
 }
 
-.button-checked {
-
+.fav-button img {
+    width: 20px;
 }

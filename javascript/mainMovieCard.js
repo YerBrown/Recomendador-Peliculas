@@ -171,7 +171,7 @@ class MainMovieCard {
   async showNextMovie(reset = false) {
     if (PELICULAS.length <= 0) {
       await this.searchMovies();
-      await this.esperar(.5);
+      await this.esperar(0.5);
     }
     ++this.currentMovieIndex;
     this.movie = PELICULAS[this.currentMovieIndex];
@@ -219,10 +219,10 @@ class MainMovieCard {
 
     const currentMovieId = this.movie.id;
     if (movieIsInList(currentMovieId)) {
-      this.favNormalButtonIcon.src = "/assets/estrella-activa.png";
+      this.favNormalButtonIcon.src =  "/multimedia/estrella-llena.png"
       this.favText.innerText = "Quitar de favoritos";
     } else {
-      this.favNormalButtonIcon.src = "/assets/estrella.png";
+      this.favNormalButtonIcon.src =  "/multimedia/estrella-vacia.png"
       this.favText.innerText = "Añadir a favoritos";
     }
 
@@ -246,10 +246,10 @@ class MainMovieCard {
 
     const currentMovieId = this.movie.id;
     if (movieIsInList(currentMovieId)) {
-      this.favReverseButtonIcon.src = "/assets/estrella-activa.png";
+      this.favReverseButtonIcon.src = "/multimedia/estrella-llena.png";
       this.favReverseText.innerText = "Quitar de favoritos";
     } else {
-      this.favReverseButtonIcon.src = "/assets/estrella.png";
+      this.favReverseButtonIcon.src = "/multimedia/estrella-vacia.png";
       this.favReverseText.innerText = "Añadir a favoritos";
     }
     this.playButton.textContent = "Ver trailer";
@@ -343,15 +343,15 @@ class MainMovieCard {
     if (movieIsInList(currentMovieId)) {
       removeMovie(currentMovieId);
 
-      this.favNormalButtonIcon.src = "/assets/estrella.png";
-      this.favReverseButtonIcon.src = "/assets/estrella.png";
+      this.favNormalButtonIcon.src = "/multimedia/estrella-vacia.png";
+      this.favReverseButtonIcon.src = "/multimedia/estrella-vacia.png";
 
       this.favText.innerText = "Añadir a favoritos";
       this.favReverseText.innerText = "Añadir a favoritos";
     } else {
       addNewMovie(this.movie);
-      this.favNormalButtonIcon.src = "/assets/estrella-activa.png";
-      this.favReverseButtonIcon.src = "/assets/estrella-activa.png";
+      this.favNormalButtonIcon.src = "/multimedia/estrella-llena.png";
+      this.favReverseButtonIcon.src = "/multimedia/estrella-llena.png";
 
       this.favText.innerText = "Quitar de favoritos";
       this.favReverseText.innerText = "Quitar de favoritos";

@@ -99,11 +99,11 @@ class MoreInfoPopup {
     if (movieIsInList(this.film.id)) {
       console.log("esta");
       this.favText.innerText = "Quitar de favoritos";
-      this.favButtonIcon.src = "/assets/estrella-activa.png";
+      this.favButtonIcon.src = "/multimedia/estrella-llena.png"
     } else {
       console.log("no esta");
       this.favText.innerText = "Añadir a favoritos";
-      this.favButtonIcon.src = "/assets/estrella.png";
+      this.favButtonIcon.src = "/multimedia/estrella-vacia.png"
     }
 
     if (this.film.trailer != null) {
@@ -182,11 +182,11 @@ class MoreInfoPopup {
   togleFavoritos() {
     if (movieIsInList(this.film.id)) {
       this.favText.innerText = "Añadir a favoritos";
-      this.favButtonIcon.src = "/assets/estrella.png";
+      this.favButtonIcon.src = "/multimedia/estrella-vacia.png"
       removeMovie(this.film.id);
     } else {
       this.favText.innerText = "Quitar de favoritos";
-      this.favButtonIcon.src = "/assets/estrella-activa.png";
+      this.favButtonIcon.src = "/multimedia/estrella-llena.png"
       addNewMovie(this.film);
     }
     this.movieList.updateList();
