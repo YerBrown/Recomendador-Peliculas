@@ -58,8 +58,9 @@ function openMyList() {
   }
 }
 export function openPreferences(preferences = null) {
-  currentMovieIndex = mainMovieCard.currentMovieIndex;
+  
   if (mainMovieCard != null) {
+    currentMovieIndex = mainMovieCard.currentMovieIndex;
     mainMovieCard = null;
     mainParent.innerHTML = "";
   }

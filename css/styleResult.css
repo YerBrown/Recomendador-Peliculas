@@ -136,6 +136,13 @@
     padding: 20px;
 }
 
+.provider-icon{
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+}
+
+
 .links {
     display: flex;
     justify-content: space-between;
