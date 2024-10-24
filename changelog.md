@@ -1,14 +1,28 @@
 # Changelog Recomendador Peliculas
 
+## Version 0.3.2
+Añadidos últimos retoques visuales en todas las secciones
+
+## Version 0.3.1
+Añadida funcionalidad de los botones de las tarjetas de favoritos
+
+## Version 0.3.0
+Integrado el formulario con el resto de componentes de manera funcional
+
+## Version 0.2.1
+Añadida funcionalidad de los botones de la tarjeta de recomendaciones
+
+## Version 0.2.1
+Creación del formulario, sin integración con la página
 
 ## Version 0.2.0
-Añadir funcionalidad de la api de peliculas en la targeta de recomendaciones
+Añadir funcionalidad de la api de peliculas en la tarjeta de recomendaciones
 
 ## Version 0.1.1
 Refactorizar la clase de la tarjeta de recomendaciones
 
 ## Version 0.1.0
-Logica de navegacion entre recomendaciones y tu lista de favoritos
+Logica de navegación entre recomendaciones y tu lista de favoritos
 
 
 ## Version 0.0.2
