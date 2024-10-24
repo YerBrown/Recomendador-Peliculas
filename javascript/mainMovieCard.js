@@ -342,47 +342,6 @@ class MainMovieCard {
 
     this.parent.appendChild(this.modalOverlay);
   }
-  showMoreInfoTrailer(movie){
-    if (movie.trailer == null) {
-      return
-    }
-    this.modalOverlay = document.createElement("div");
-    this.modalOverlay.classList.add("modal-overlay");
-    this.modalOverlay.addEventListener("click", (e) => {
-      if (e.target === this.modalOverlay) {
-        this.closeModal();
-      }
-    });
-    this.handleEscape = (e) => {
-      if (e.key === "Escape") {
-        this.closeModal();
-
-        document.removeEventListener("keydown", this.handleEscape);
-      }
-    };
-    document.addEventListener("keydown", this.handleEscape);
-
-
-    this.modalContent = document.createElement("div");
-    this.modalContent.classList.add("modal-content");
-
-    this.closeButton = document.createElement("button");
-    this.closeButton.classList.add("close-button");
-    this.closeButton.innerHTML = "×";
-    this.closeButton.setAttribute("aria-label", "Cerrar trailer");
-    this.closeButton.addEventListener("click", () => this.closeModal());
-
-    this.iframe = document.createElement("iframe");
-    this.iframe.id = "trailer-iframe";
-    const baseTrailerUrl = "https://www.youtube.com/embed/";
-    this.iframe.src = baseTrailerUrl + movie.trailer.key;
-
-    this.modalOverlay.appendChild(this.modalContent);
-    this.modalContent.appendChild(this.iframe);
-    this.modalContent.appendChild(this.closeButton);
-
-    this.parent.appendChild(this.modalOverlay);
-  }
   closeModal() {
     this.modalOverlay.remove();
   }
