@@ -6,6 +6,7 @@ export function getFavMovies() {
 }
 function saveFavMovies(myList) {
   localStorage.setItem(LIST_KEY, JSON.stringify(cleanList(myList)));
+  console.log(getFavMovies());
 }
 export function addNewMovie(movie) {
   let myList = [];
@@ -14,10 +15,9 @@ export function addNewMovie(movie) {
   }
   myList.push(movie);
   saveFavMovies(myList);
-  console.log(getFavMovies());
 }
-function cleanList(myList){
-    return myList.filter((movie) => typeof movie == 'object' )
+function cleanList(myList) {
+  return myList.filter((movie) => typeof movie == "object");
 }
 export function removeMovie(movieId) {
   let myList = [];
@@ -52,12 +52,14 @@ class FavList {
 
     this.myList.append(title, this.grid);
     this.parent.appendChild(this.myList);
-    this.updateList(this.moviesList);
+    this.updateList();
   }
-  updateList(moviesList) {
-    console.log(moviesList);
-    for (const movie of moviesList) {
-      const movieCardNode = new FavMovieCard(movie, "fav-grid").card;
+  updateList() {
+    this.grid.innerHTML = "";
+    this.moviesList = getFavMovies();
+    this.moviesList= this.moviesList.reverse();
+    for (const movie of this.moviesList) {
+      const movieCardNode = new FavMovieCard(this, movie, "fav-grid").card;
     }
   }
 }

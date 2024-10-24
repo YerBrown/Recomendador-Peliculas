@@ -1,8 +1,11 @@
 import { getGenreById, getFilmById } from "./movie-list.js";
+import { movieIsInList, addNewMovie, removeMovie } from "./favMoviesList.js";
 import MainMovieCard from "./mainMovieCard.js";
+import { currentList } from "./codigo.js";
 class MoreInfoPopup {
-  constructor(film, parentId) {
+  constructor(movieList, film, parentId) {
     this.film = film;
+    this.movieList = movieList;
     this.parentId = parentId;
     this.parent = document.getElementById(parentId);
     this.createMoreInfoPopup();
@@ -28,7 +31,13 @@ class MoreInfoPopup {
     const director = document.createElement("h5");
     const cast = document.createElement("h5");
     const links = document.createElement("div");
+    this.favButtonIcon = document.createElement("img");
     this.favButton = document.createElement("button");
+    this.favButtonIcon.classList.add("fav-icon");
+    this.favButton.addEventListener("click", () => this.togleFavoritos());
+    this.favButton.innerHTML = "";
+    this.favText = document.createElement("p");
+    this.favButton.append(this.favButtonIcon, this.favText);
     const playButton = document.createElement("button");
 
     //Añadir ID, class
@@ -87,11 +96,24 @@ class MoreInfoPopup {
       }
     }
     people.innerText = peopleString;
-    this.favButton.textContent = "Añadir a favoritos";
-    playButton.textContent = "Ver trailer";
-    playButton.addEventListener('click', ()=>{
+    if (movieIsInList(this.film.id)) {
+      console.log("esta");
+      this.favText.innerText = "Quitar de favoritos";
+      this.favButtonIcon.src = "/assets/estrella-activa.png";
+    } else {
+      console.log("no esta");
+      this.favText.innerText = "Añadir a favoritos";
+      this.favButtonIcon.src = "/assets/estrella.png";
+    }
+
+    if (this.film.trailer != null) {
+      playButton.textContent = "Ver trailer";
+    } else {
+      playButton.textContent = "Trailer no disponible";
+    }
+    playButton.addEventListener("click", () => {
       this.showMoreInfoTrailer(this.film);
-    })
+    });
     links.append(this.favButton, playButton);
 
     // Añadir el boton de cerrar el popup
@@ -114,9 +136,9 @@ class MoreInfoPopup {
   removeMoreInfoPopup() {
     this.popup.remove();
   }
-  showMoreInfoTrailer(movie){
+  showMoreInfoTrailer(movie) {
     if (movie.trailer == null) {
-      return
+      return;
     }
     this.modalOverlay = document.createElement("div");
     this.modalOverlay.classList.add("modal-overlay");
@@ -133,7 +155,6 @@ class MoreInfoPopup {
       }
     };
     document.addEventListener("keydown", this.handleEscape);
-
 
     this.modalContent = document.createElement("div");
     this.modalContent.classList.add("modal-content");
@@ -157,6 +178,18 @@ class MoreInfoPopup {
   }
   closeModal() {
     this.modalOverlay.remove();
+  }
+  togleFavoritos() {
+    if (movieIsInList(this.film.id)) {
+      this.favText.innerText = "Añadir a favoritos";
+      this.favButtonIcon.src = "/assets/estrella.png";
+      removeMovie(this.film.id);
+    } else {
+      this.favText.innerText = "Quitar de favoritos";
+      this.favButtonIcon.src = "/assets/estrella-activa.png";
+      addNewMovie(this.film);
+    }
+    this.movieList.updateList();
   }
 }
 export default MoreInfoPopup;

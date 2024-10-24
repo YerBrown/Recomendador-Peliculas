@@ -64,7 +64,7 @@
 }
 
 #card {
-    position: re;
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 90%;
@@ -80,16 +80,17 @@
 
 #card-filter{
     position: absolute;
-    z-index: 100;
+    z-index: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.362);
+    background-color: rgba(5, 5, 5, 0.166);
     background-size: cover;
     background-position: center;
 }
 #normal-card,
 #reverse-card {
     display: flex;
+    z-index: 1;
     flex-direction: row;
     box-sizing: border-box;
     width: 100%;

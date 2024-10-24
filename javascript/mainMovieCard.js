@@ -19,6 +19,7 @@ class MainMovieCard {
     this.parentId = parentId;
     this.parent = document.getElementById(parentId);
     this.currentMovieIndex = -1;
+    this.movie = this.movie;
     this.currentPage = 1;
     this.createMainCard();
   }
@@ -27,10 +28,9 @@ class MainMovieCard {
     this.cardContainer = document.createElement("section");
     this.cardContainer.id = "card-container";
     this.cardFilter = document.createElement("div");
-    this.cardFilter.id = "popup-background-filter";
+    this.cardFilter.id = "card-filter";
 
     this.parent.appendChild(this.cardContainer);
-    
 
     this.card = document.createElement("div");
     this.card.id = "card";
@@ -99,14 +99,13 @@ class MainMovieCard {
     this.infoButton.classList.add("info-button");
     this.infoButton.addEventListener("click", () => this.showReverseCard());
 
-    this.favNormalButton.innerHTML = ""
-    this.favText = document.createElement("p")
+    this.favNormalButton.innerHTML = "";
+    this.favText = document.createElement("p");
     this.favNormalButton.append(this.favNormalButtonIcon, this.favText);
 
     this.cardContainer.append(this.card, this.buttonsContainer);
-    
 
-    this.normalCardContent.append(this.cardFilter,this.movieTitle, cardRight);
+    this.normalCardContent.append(this.cardFilter, this.movieTitle, cardRight);
     cardRight.appendChild(movieData);
     movieData.appendChild(movieDataList);
     movieDataList.appendChild(this.movieDataYear);
@@ -118,14 +117,12 @@ class MainMovieCard {
     frontLinks.appendChild(this.favNormalButton);
     frontLinks.appendChild(this.infoButton);
 
-
-
     //Reverse card
     this.reverseCardContent = document.createElement("div");
     this.reverseCardContent.id = "reverse-card";
 
-    this.posterContainer =  document.createElement("div");
-    this.posterContainer.classList.add('poster-container')
+    this.posterContainer = document.createElement("div");
+    this.posterContainer.classList.add("poster-container");
 
     this.poster = document.createElement("img");
     this.poster.classList.add("poster");
@@ -141,14 +138,19 @@ class MainMovieCard {
     reverseLinks.id = "front-links";
     reverseLinks.classList.add("links");
 
-    this.favReverseButton = document.createElement('button')
+    this.favReverseButton = document.createElement("button");
     this.favReverseButton.classList.add("fav-button");
-    this.favReverseButton.innerHTML = ""
+    this.favReverseButton.innerHTML = "";
     this.favReverseButtonIcon = document.createElement("img");
     this.favReverseButtonIcon.classList.add("fav-icon");
-    this.favReverseText = document.createElement("p")
-    this.favReverseButton.append(this.favReverseButtonIcon, this.favReverseText);
-    this.favReverseButton.addEventListener("click", () => this.toggleFavorite());
+    this.favReverseText = document.createElement("p");
+    this.favReverseButton.append(
+      this.favReverseButtonIcon,
+      this.favReverseText
+    );
+    this.favReverseButton.addEventListener("click", () =>
+      this.toggleFavorite()
+    );
 
     this.playButton = document.createElement("button");
     this.playButton.classList.add("play-button");
@@ -169,13 +171,16 @@ class MainMovieCard {
   async showNextMovie(reset = false) {
     if (PELICULAS.length <= 0) {
       await this.searchMovies();
+      await this.esperar(.5);
     }
     ++this.currentMovieIndex;
+    this.movie = PELICULAS[this.currentMovieIndex];
     if (this.currentMovieIndex >= PELICULAS.length - 2) {
       PELICULAS.splice(0, PELICULAS.length - 2);
 
       this.currentMovieIndex = 0;
       ++this.currentPage;
+      this.movie = PELICULAS[this.currentMovieIndex];
       this.showNormalCard();
       await this.searchMovies();
     } else {
@@ -187,47 +192,38 @@ class MainMovieCard {
   }
   showNormalCard() {
     this.removeCurrentCard();
-
     const baseImageUrl = "https://image.tmdb.org/t/p/original";
-    this.card.style.backgroundImage = `url(${baseImageUrl + PELICULAS[this.currentMovieIndex].backdropPath
-      })`;
+    this.card.style.backgroundImage = `url(${
+      baseImageUrl + this.movie.backdropPath
+    })`;
 
-    this.movieTitle.textContent = PELICULAS[this.currentMovieIndex].title;
+    this.movieTitle.textContent = this.movie.title;
 
-    this.movieDataDirector.innerText = "Director: " + PELICULAS[this.currentMovieIndex].director;
+    this.movieDataDirector.innerText = "Director: " + this.movie.director;
 
     this.movieDataYear.innerText =
-      "Año: " + PELICULAS[this.currentMovieIndex].releaseDate.split("-")[0];
+      "Año: " + this.movie.releaseDate.split("-")[0];
 
     this.movieDataGenre.innerText =
-      "Género: " + PELICULAS[this.currentMovieIndex].genreIds.map((id) => getGenreById(id)).join(", ");
+      "Género: " + this.movie.genreIds.map((id) => getGenreById(id)).join(", ");
 
-
-    this.streamingPlatforms.innerHTML = ""
-
-    if (PELICULAS[this.currentMovieIndex].watchProviders != "null") {
-
-
-      for (const provider of PELICULAS[this.currentMovieIndex].watchProviders) {
-        const newProvider = document.createElement("img")
-        newProvider.classList.add("provider-icon")
-        newProvider.setAttribute("src", baseImageUrl + provider.logo_path)
-        this.streamingPlatforms.appendChild(newProvider)
+    this.streamingPlatforms.innerHTML = "";
+    if (this.movie.watchProviders != "null") {
+      for (const provider of this.movie.watchProviders) {
+        const newProvider = document.createElement("img");
+        newProvider.classList.add("provider-icon");
+        newProvider.setAttribute("src", baseImageUrl + provider.logo_path);
+        this.streamingPlatforms.appendChild(newProvider);
       }
     }
 
-    const currentMovieId = PELICULAS[this.currentMovieIndex].id;
+    const currentMovieId = this.movie.id;
     if (movieIsInList(currentMovieId)) {
-
-      this.favNormalButtonIcon.src = "/assets/estrella-activa.png"
-      this.favText.innerText = "Quitar de favoritos"
-
-
+      this.favNormalButtonIcon.src = "/assets/estrella-activa.png";
+      this.favText.innerText = "Quitar de favoritos";
     } else {
-
-      this.favNormalButtonIcon.src = "/assets/estrella.png"
-      this.favText.innerText = "Añadir a favoritos"
-
+      this.favNormalButtonIcon.src = "/assets/estrella.png";
+      this.favText.innerText = "Añadir a favoritos";
     }
 
     this.infoButton.textContent = "Más info";
@@ -238,36 +234,34 @@ class MainMovieCard {
   showReverseCard() {
     this.removeCurrentCard();
     const baseImageUrl = "https://image.tmdb.org/t/p/original";
-    this.card.style.backgroundImage = `url(${baseImageUrl + PELICULAS[this.currentMovieIndex].backdropPath
-      })`;
-    this.poster.src =
-      baseImageUrl + PELICULAS[this.currentMovieIndex].posterPath;
+    this.card.style.backgroundImage = `url(${
+      baseImageUrl + this.movie.backdropPath
+    })`;
+    this.poster.src = baseImageUrl + this.movie.posterPath;
 
-    const year = PELICULAS[this.currentMovieIndex].releaseDate.split("-")[0];
-    this.reverseMovieTitle.textContent = `${PELICULAS[this.currentMovieIndex].title
-      } (${year})`;
+    const year = this.movie.releaseDate.split("-")[0];
+    this.reverseMovieTitle.textContent = `${this.movie.title} (${year})`;
 
-    this.sinopsis.textContent = PELICULAS[this.currentMovieIndex].overview;
+    this.sinopsis.textContent = this.movie.overview;
 
-    const currentMovieId = PELICULAS[this.currentMovieIndex].id;
+    const currentMovieId = this.movie.id;
     if (movieIsInList(currentMovieId)) {
-
-      this.favReverseButtonIcon.src = "/assets/estrella-activa.png"
-      this.favReverseText.innerText = "Quitar de favoritos"
-
-
+      this.favReverseButtonIcon.src = "/assets/estrella-activa.png";
+      this.favReverseText.innerText = "Quitar de favoritos";
     } else {
-      this.favReverseButtonIcon.src = "/assets/estrella.png"
-      this.favReverseText.innerText = "Añadir a favoritos"
-
+      this.favReverseButtonIcon.src = "/assets/estrella.png";
+      this.favReverseText.innerText = "Añadir a favoritos";
     }
     this.playButton.textContent = "Ver trailer";
-    if (PELICULAS[this.currentMovieIndex].trailer == null) {
-      this.playButton.textContent = "Trailer no disponible"
+    if (this.movie.trailer == null) {
+      this.playButton.textContent = "Trailer no disponible";
     }
     this.backButton.textContent = "Volver";
 
     this.card.appendChild(this.reverseCardContent);
+    const backgroundFilter = document.createElement("div");
+    backgroundFilter.id = "card-filter";
+    this.card.appendChild(backgroundFilter);
   }
   removeCurrentCard() {
     this.card.innerHTML = "";
@@ -295,15 +289,15 @@ class MainMovieCard {
         movieData["poster_path"],
         movieData["backdrop_path"]
       );
-      await newMovie.getDetails();
+      // await newMovie.getDetails();
       discoveredMovies.push(newMovie);
     }
     console.log(discoveredMovies);
     changeDiscoverMovies(discoveredMovies, reset);
   }
-   showTrailer() {
-    if (PELICULAS[this.currentMovieIndex].trailer == null) {
-      return
+  showTrailer() {
+    if (this.movie.trailer == null) {
+      return;
     }
     this.modalOverlay = document.createElement("div");
     this.modalOverlay.classList.add("modal-overlay");
@@ -321,7 +315,6 @@ class MainMovieCard {
     };
     document.addEventListener("keydown", this.handleEscape);
 
-
     this.modalContent = document.createElement("div");
     this.modalContent.classList.add("modal-content");
 
@@ -334,7 +327,7 @@ class MainMovieCard {
     this.iframe = document.createElement("iframe");
     this.iframe.id = "trailer-iframe";
     const baseTrailerUrl = "https://www.youtube.com/embed/";
-    this.iframe.src = baseTrailerUrl + PELICULAS[this.currentMovieIndex].trailer.key;
+    this.iframe.src = baseTrailerUrl + this.movie.trailer.key;
 
     this.modalOverlay.appendChild(this.modalContent);
     this.modalContent.appendChild(this.iframe);
@@ -346,31 +339,26 @@ class MainMovieCard {
     this.modalOverlay.remove();
   }
   toggleFavorite() {
-    const currentMovieId = PELICULAS[this.currentMovieIndex].id;
+    const currentMovieId = this.movie.id;
     if (movieIsInList(currentMovieId)) {
+      removeMovie(currentMovieId);
 
-      removeMovie(currentMovieId)
+      this.favNormalButtonIcon.src = "/assets/estrella.png";
+      this.favReverseButtonIcon.src = "/assets/estrella.png";
 
-      this.favNormalButtonIcon.src = "/assets/estrella.png"
-      this.favReverseButtonIcon.src = "/assets/estrella.png" 
-
-      this.favText.innerText = "Añadir a favoritos"
-      this.favReverseText.innerText = "Añadir a favoritos"
-
+      this.favText.innerText = "Añadir a favoritos";
+      this.favReverseText.innerText = "Añadir a favoritos";
     } else {
-      addNewMovie(PELICULAS[this.currentMovieIndex]);
-      this.favNormalButtonIcon.src = "/assets/estrella-activa.png"
-      this.favReverseButtonIcon.src = "/assets/estrella-activa.png"
+      addNewMovie(this.movie);
+      this.favNormalButtonIcon.src = "/assets/estrella-activa.png";
+      this.favReverseButtonIcon.src = "/assets/estrella-activa.png";
 
-      this.favText.innerText = "Quitar de favoritos"
-      this.favReverseText.innerText = "Quitar de favoritos"
+      this.favText.innerText = "Quitar de favoritos";
+      this.favReverseText.innerText = "Quitar de favoritos";
     }
+  }
+  esperar(segundos) {
+    return new Promise((resolve) => setTimeout(resolve, segundos * 1000));
   }
 }
 export default MainMovieCard;
-
-
-
-
-
-

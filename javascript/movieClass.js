@@ -8,6 +8,7 @@ class Movie {
         this.overview = overview;
         this.posterPath = posterPath;
         this.backdropPath = backdropPath;
+        this.getDetails();
     }
     async getDetails(){
         const movieDetails = await getTrailerAndWatchProviders(this.id);

@@ -8,7 +8,7 @@ window.mediaLink = "https://www.themoviedb.org/t/p/original/";
 const mainParent = document.getElementsByTagName("main")[0];
 let mainMovieCard = null;
 let currentMovieIndex = 0;
-
+export let currentList = null;
 // Abrir ventana de recomendaciones
 export async function openMainPage(updateFilms = false) {
   //Comprobar si ya se relleno el formulario alguna vez
