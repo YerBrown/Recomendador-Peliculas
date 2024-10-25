@@ -10,4 +10,11 @@ En caso de querer otra película podemos hacerlo, manteniendo los parámetros in
 
 Tenemos una sección de favoritos donde se almacenarán las películas previamente añadidas. Esta página se almacenará en Local Storage. 
 
+Para hacer funcionar la página es necesaria una Apikey. Primero, en la carpeta javascript creamos un archivo llamado "apiKey.js" y en el interior copiamos el ejemplo mostrado en el archivo "apiKey.js/example". Para conseguirla la key tenéis que hacer lo siguiente: 
+Vamos a https://developer.themoviedb.org/docs/getting-started. 
+Hay que registrarse en la página. 
+Id a la sección API Reference. 
+Una vez aquí, en el dashboard izquierdo seleccionamos Authentication. 
+En esa sección copiamos el Acces Token y el API Key Auth y lo pegamos en el archivo "apiKey.js" creado al principio.
+
 
